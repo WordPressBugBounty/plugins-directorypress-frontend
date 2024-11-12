@@ -248,18 +248,23 @@ if( !function_exists('dpfl_listingStatusChange_triger') ){
 	function dpfl_listingStatusChange_triger(){ 
 		
 		$listing_id = !empty( $_POST['listing_id'] ) ? sanitize_text_field( $_POST['listing_id'] ) : '';
-		$current_status = get_post_status ( $listing_id); 
-		$listing_status = get_post_meta($listing_id, '_listing_status', true);
-		if($listing_status == 'active' && get_post_status ( $listing_id) == 'publish'){
-				$new_status_text = esc_html__('Private', 'directorypress-frontend');
-				$current_status_text = esc_html__('Publish', 'directorypress-frontend');
-		}else{
-				$new_status_text = esc_html__('Publish', 'directorypress-frontend');
-				$current_status_text = esc_html__('Private', 'directorypress-frontend');
-		}
+		if ($listing_id && directorypress_user_permission_to_edit_listing($listing_id)) {
+			$current_status = get_post_status ( $listing_id); 
+			$listing_status = get_post_meta($listing_id, '_listing_status', true);
+			if($listing_status == 'active' && get_post_status ( $listing_id) == 'publish'){
+					$new_status_text = esc_html__('Private', 'directorypress-frontend');
+					$current_status_text = esc_html__('Publish', 'directorypress-frontend');
+			}else{
+					$new_status_text = esc_html__('Publish', 'directorypress-frontend');
+					$current_status_text = esc_html__('Private', 'directorypress-frontend');
+			}
 											
-	echo '<div id="listing_change_status" data-listing-id="'. esc_attr($listing_id) .'" class="alert alert-info">'. sprintf(esc_html__('Your Current Listing Status is %s you can change Listing Status to %s below.', 'directorypress-frontend'),$current_status_text, $new_status_text).'</div>';
-  die();
+			echo '<div id="listing_change_status" data-listing-id="'. esc_attr($listing_id) .'" class="alert alert-info">'. sprintf(esc_html__('Your Current Listing Status is %s you can change Listing Status to %s below.', 'directorypress-frontend'),$current_status_text, $new_status_text).'</div>';
+		}else{
+			echo '<div id="listing_change_status" class="alert alert-danger">'. esc_html__('Your are not allowed to access this data', 'directorypress-frontend') .'</div>';
+		}
+		
+		die();
 	}
 	add_action('wp_ajax_dpfl_listingStatusChange_triger', 'dpfl_listingStatusChange_triger');
 	add_action('wp_ajax_nopriv_dpfl_listingStatusChange_triger', 'dpfl_listingStatusChange_triger');

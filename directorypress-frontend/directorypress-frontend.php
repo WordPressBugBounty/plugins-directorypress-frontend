@@ -4,7 +4,7 @@
  * Plugin Name:       DirectoryPress Frontend
  * Plugin URI:        https://designinvento.net/downloads/directorypress-frontend-listing-addon/
  * Description:       Frontend Ads listing functionality for DirectoryPress Plugin.
- * Version:           2.7.8
+ * Version:           2.7.9
  * Author:            Designinvento
  * Author URI:        https://designinvento.net
  * License:           GPL-2.0+
@@ -18,7 +18,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define( 'DIRECTORYPRESS_FRONTEND_VERSION', '2.7.8' );
+define( 'DIRECTORYPRESS_FRONTEND_VERSION', '2.7.9' );
 define('DPFL_PATH', plugin_dir_path(__FILE__));
 define('DPFL_URL', plugins_url('/', __FILE__));
 define( 'DPFL_TEMPLATES_PATH', DPFL_PATH . 'public/');

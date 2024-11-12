@@ -72,7 +72,7 @@ if($umv_status == 'verified'){
 						<div class="profile-img-buttons clearfix">
 							
 							<form class="dpfl-user-profile-photo">
-									<label class="panel-btn1 choose-author-image" for="avatar"><i class="dicode-material-icons dicode-material-icons-arrow-expand-up"></i><?php echo esc_html__('Upload Photo'); ?></label>
+									<label class="panel-btn1 choose-author-image" for="avatar"><i class="dicode-material-icons dicode-material-icons-arrow-expand-up"></i><?php echo esc_html__('Upload Photo', 'directorypress-frontend'); ?></label>
 									<input class="avatar" type="file" name="avatar" id="avatar" value="" style="visibility:hidden;height:0;">
 							</form>
 							<a class="remove-author-image" href="#"><i class="fa fa-trash-alt"></i></a>
