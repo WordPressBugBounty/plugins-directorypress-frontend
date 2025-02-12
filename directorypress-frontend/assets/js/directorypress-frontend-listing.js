@@ -142,28 +142,28 @@ jQuery(document).ready(function($) {
 		jQuery('#listing_action_modal').addClass(modal_class);
         
 		if(modal_class == 'listing_performance_modal'){
-			var data = {'action': 'directorypress_listing_peformance', 'listing_id': listing_id};
+			var data = {'action': 'directorypress_listing_peformance', 'listing_id': listing_id, 'nonce': dpfl_custom_vars.nonce};
 			var action_btn = false;
 		}else if(modal_class == 'listing_change_package_modal'){
-			var data = {'action': 'dpfl_upgradeListing_html', 'listing_id': listing_id};
+			var data = {'action': 'dpfl_upgradeListing_html', 'listing_id': listing_id, 'nonce': dpfl_custom_vars.nonce};
 			var action_btn = true;
 		}else if(modal_class == 'listing_bumpup_modal'){
-			var data = {'action': 'dpfl_bumpUpListing_html', 'listing_id': listing_id};
+			var data = {'action': 'dpfl_bumpUpListing_html', 'listing_id': listing_id, 'nonce': dpfl_custom_vars.nonce};
 			var action_btn = true;
 		}else if(modal_class == 'listing_renew_modal'){
-			var data = {'action': 'dpfl_renewListing_html', 'listing_id': listing_id};
+			var data = {'action': 'dpfl_renewListing_html', 'listing_id': listing_id, 'nonce': dpfl_custom_vars.nonce};
 			var action_btn = true;
 		}else if(modal_class == 'listing_delete_modal'){
-			var data = {'action': 'dpfl_deleteListing_html', 'listing_id': listing_id};
+			var data = {'action': 'dpfl_deleteListing_html', 'listing_id': listing_id, 'nonce': dpfl_custom_vars.nonce};
 			var action_btn = true;
 		}else if(modal_class == 'change_listing_status_modal'){
-			var data = {'action': 'dpfl_listingStatusChange_triger', 'listing_id': listing_id};
+			var data = {'action': 'dpfl_listingStatusChange_triger', 'listing_id': listing_id, 'nonce': dpfl_custom_vars.nonce};
 			var action_btn = true;
 		}else if(modal_class == 'listing_admin_notice_modal'){
-			var data = {'action': 'dpfl_AdminNote_html', 'listing_id': listing_id};
+			var data = {'action': 'dpfl_AdminNote_html', 'listing_id': listing_id, 'nonce': dpfl_custom_vars.nonce};
 			var action_btn = true;
 		}else if(modal_class == 'listing_translation_modal'){
-			var data = {'action': 'dpfl_listingtrans_html', 'listing_id': listing_id};
+			var data = {'action': 'dpfl_listingtrans_html', 'listing_id': listing_id, 'nonce': dpfl_custom_vars.nonce};
 			var action_btn = false;
 		}
 		
@@ -202,7 +202,7 @@ jQuery(document).ready(function($) {
         jQuery.ajax({
             type: "POST",
             url: dpfl_custom_vars.ajaxurl,
-			data: {'action': 'dpfl_listingStatusChange', 'listing_id': listng_id},
+			data: {'action': 'dpfl_listingStatusChange', 'listing_id': listng_id, 'nonce': dpfl_custom_vars.nonce},
             dataType: "json",
 			cache: false,
             success: function(response) {
@@ -214,30 +214,6 @@ jQuery(document).ready(function($) {
 					jQuery('#listing_action_modal .modal-body').html('<div class="alert alert-danger alert-dismissible">'+response.message+'<a href="#" class="close" data-bs-dismiss="alert" aria-label="close">&times;</a></div>');  
                 }
 				jQuery('#listing_action_modal').removeClass('change_listing_status_modal');
-            }
-        });
-    });
-	jQuery(document).on('click', '.pp-button a.pricing2', function (e) {
-        e.preventDefault();  
-		jQuery('.directorypress-submit-block').append(loader);
-        var _this = jQuery(this);
-		
-		var package_id = _this.attr('data-package-id');
-		var directorytype = _this.attr('data-directorytype');
-		//jQuery('.ajax-submit-data').append('<imput type="hidden" name="package" value="'+package_id+'" />');
-        // var profileForm = jQuery('form.ajax-submit-data').serialize();
-		//console.log(package_id);
-		
-        jQuery.ajax({
-            type: "POST",
-            url: dpfl_custom_vars.ajaxurl,
-			data: {'action': 'dpfl_submit_listing_html', 'package': package_id, 'directorytype': directorytype},
-			//data: profileForm + '&action=dpfl_submit_listing_html',
-            dataType: "html",
-            success: function(response) {
-				jQuery('.directorypress-submit-block').find(loader_wrapper).remove();
-				jQuery('.directorypress-submit-block').html(response);	
-				jQuery('.directorypress-select2').select2();
             }
         });
     });

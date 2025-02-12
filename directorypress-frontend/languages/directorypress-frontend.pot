@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: DirectoryPress Frontend Listing\n"
-"POT-Creation-Date: 2024-11-12 23:57+0500\n"
+"POT-Creation-Date: 2025-02-13 01:28+0500\n"
 "PO-Revision-Date: 2020-02-19 17:40+0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 2.4.3\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: directorypress-frontend.php\n"
@@ -291,29 +291,29 @@ msgstr ""
 msgid "User Panel SubMenu Border Bottom Color"
 msgstr ""
 
-#: includes/class-directorypress-frontend.php:265
+#: includes/class-directorypress-frontend.php:266
 msgid "Submit new"
 msgstr ""
 
-#: includes/class-directorypress-frontend.php:271
-#: includes/class-directorypress-frontend.php:313
+#: includes/class-directorypress-frontend.php:272
+#: includes/class-directorypress-frontend.php:314
 #, php-format
 msgid "Submit new %s"
 msgstr ""
 
-#: includes/class-directorypress-frontend.php:278
+#: includes/class-directorypress-frontend.php:279
 msgid "Add new listing"
 msgstr ""
 
-#: includes/class-directorypress-frontend.php:334
+#: includes/class-directorypress-frontend.php:335
 msgid "Log out"
 msgstr ""
 
-#: includes/class-directorypress-frontend.php:357
+#: includes/class-directorypress-frontend.php:358
 msgid "You can not see dashboard!"
 msgstr ""
 
-#: includes/class-directorypress-frontend.php:387
+#: includes/class-directorypress-frontend.php:388
 msgid "Approval of listing"
 msgstr ""
 
@@ -556,205 +556,207 @@ msgstr ""
 msgid " Directorypress Dashboard"
 msgstr ""
 
-#: includes/listing-functions.php:12
+#: includes/listing-functions.php:16
 msgid "Your comment here!"
 msgstr ""
 
-#: includes/listing-functions.php:14
+#: includes/listing-functions.php:18
 msgid ""
 "Feel free to contact us if you have a special query regarding this listing."
 msgstr ""
 
-#: includes/listing-functions.php:37
+#: includes/listing-functions.php:38 includes/listing-functions.php:83
+#: includes/listing-functions.php:133 includes/listing-functions.php:187
+#: includes/listing-functions.php:248 includes/listing-functions.php:321
+#: includes/listing-functions.php:548 includes/listing-functions.php:607
+#: includes/profile-functions.php:12
+msgid "No kiddies please!"
+msgstr ""
+
+#: includes/listing-functions.php:47
 msgid "Message Sent!"
 msgstr ""
 
-#: includes/listing-functions.php:41
+#: includes/listing-functions.php:50
 msgid "Error: You can not Manage this listing"
 msgstr ""
 
-#: includes/listing-functions.php:55
+#: includes/listing-functions.php:65
 msgid "Listing will be deleted permanently along with all data."
 msgstr ""
 
-#: includes/listing-functions.php:75
+#: includes/listing-functions.php:91
 msgid "Deleted Sucessfully!"
 msgstr ""
 
-#: includes/listing-functions.php:80 includes/listing-functions.php:292
-#: includes/listing-functions.php:477
+#: includes/listing-functions.php:96 includes/listing-functions.php:338
 msgid "Error: not allowed"
 msgstr ""
 
-#: includes/listing-functions.php:85
+#: includes/listing-functions.php:100
 msgid "Error: You can not Delete this listing"
 msgstr ""
 
-#: includes/listing-functions.php:99
+#: includes/listing-functions.php:115
 msgid "Listing will be BumpedUp to the top of all listings."
 msgstr ""
 
-#: includes/listing-functions.php:122
+#: includes/listing-functions.php:145
 msgid "Listing BumpUp To Top"
 msgstr ""
 
-#: includes/listing-functions.php:126
+#: includes/listing-functions.php:149
 msgid ""
 "Notice: An order has been created, please pay by going to your orders to "
 "complete Bumpup process."
 msgstr ""
 
-#: includes/listing-functions.php:130 includes/listing-functions.php:176
+#: includes/listing-functions.php:153 includes/listing-functions.php:208
 msgid "Error: Not Allowed"
 msgstr ""
 
-#: includes/listing-functions.php:145
+#: includes/listing-functions.php:169
 msgid ""
 "Listing will be Renewed as per purchased plan, Payment may apply if applicable."
 msgstr ""
 
-#: includes/listing-functions.php:168
+#: includes/listing-functions.php:200
 msgid "Listing Renewed Sucessfully"
 msgstr ""
 
-#: includes/listing-functions.php:172
+#: includes/listing-functions.php:204
 msgid ""
 "Notice: An order has been created, please pay by going to your orders to "
 "complete Renew process."
 msgstr ""
 
-#: includes/listing-functions.php:192
+#: includes/listing-functions.php:225
 msgid "You can upgrade listing to available options."
 msgstr ""
 
-#: includes/listing-functions.php:218
+#: includes/listing-functions.php:257
 msgid "New package ID"
 msgstr ""
 
-#: includes/listing-functions.php:224
+#: includes/listing-functions.php:263
 msgid "Upgraded Sucessfully!"
 msgstr ""
 
-#: includes/listing-functions.php:227
+#: includes/listing-functions.php:266
 msgid ""
 "Notice: An order has been created, please pay by going to your orders to "
 "complete upgradation."
 msgstr ""
 
-#: includes/listing-functions.php:232
+#: includes/listing-functions.php:271
 msgid "Something Went Wrong, Please Try Again"
 msgstr ""
 
-#: includes/listing-functions.php:236
+#: includes/listing-functions.php:275
 msgid "Not Allowed"
 msgstr ""
 
-#: includes/listing-functions.php:255 includes/listing-functions.php:259
+#: includes/listing-functions.php:298 includes/listing-functions.php:302
 #: includes/panel-functions.php:80
 msgid "Private"
 msgstr ""
 
-#: includes/listing-functions.php:256 includes/listing-functions.php:258
-#: includes/listing-functions.php:287 public/partials/listing/desktop.php:160
+#: includes/listing-functions.php:299 includes/listing-functions.php:301
+#: includes/listing-functions.php:333 public/partials/listing/desktop.php:160
 #: public/partials/listing/mobile.php:121
 msgid "Publish"
 msgstr ""
 
-#: includes/listing-functions.php:262
+#: includes/listing-functions.php:305
 #, php-format
 msgid ""
 "Your Current Listing Status is %s you can change Listing Status to %s below."
 msgstr ""
 
-#: includes/listing-functions.php:264
+#: includes/listing-functions.php:307
 msgid "Your are not allowed to access this data"
 msgstr ""
 
-#: includes/listing-functions.php:282 includes/listing-functions.php:469
+#: includes/listing-functions.php:328
 msgid "Listing Status Changed to Publish Sucessfully!"
 msgstr ""
 
-#: includes/listing-functions.php:283 public/partials/listing/desktop.php:160
+#: includes/listing-functions.php:329 public/partials/listing/desktop.php:160
 #: public/partials/listing/mobile.php:121
 msgid "Make Private"
 msgstr ""
 
-#: includes/listing-functions.php:286 includes/listing-functions.php:472
+#: includes/listing-functions.php:332
 msgid "Listing Status Changed to Private Sucessfully!"
 msgstr ""
 
-#: includes/listing-functions.php:318 public/view_stats.php:7
+#: includes/listing-functions.php:369 public/view_stats.php:7
 msgid "January"
 msgstr ""
 
-#: includes/listing-functions.php:319 public/view_stats.php:8
+#: includes/listing-functions.php:370 public/view_stats.php:8
 msgid "February"
 msgstr ""
 
-#: includes/listing-functions.php:320 public/view_stats.php:9
+#: includes/listing-functions.php:371 public/view_stats.php:9
 msgid "March"
 msgstr ""
 
-#: includes/listing-functions.php:321 public/view_stats.php:10
+#: includes/listing-functions.php:372 public/view_stats.php:10
 msgid "April"
 msgstr ""
 
-#: includes/listing-functions.php:322 public/view_stats.php:11
+#: includes/listing-functions.php:373 public/view_stats.php:11
 msgid "May"
 msgstr ""
 
-#: includes/listing-functions.php:323 public/view_stats.php:12
+#: includes/listing-functions.php:374 public/view_stats.php:12
 msgid "June"
 msgstr ""
 
-#: includes/listing-functions.php:324 public/view_stats.php:13
+#: includes/listing-functions.php:375 public/view_stats.php:13
 msgid "July"
 msgstr ""
 
-#: includes/listing-functions.php:325 public/view_stats.php:14
+#: includes/listing-functions.php:376 public/view_stats.php:14
 msgid "August"
 msgstr ""
 
-#: includes/listing-functions.php:326 public/view_stats.php:15
+#: includes/listing-functions.php:377 public/view_stats.php:15
 msgid "September"
 msgstr ""
 
-#: includes/listing-functions.php:327 public/view_stats.php:16
+#: includes/listing-functions.php:378 public/view_stats.php:16
 msgid "October"
 msgstr ""
 
-#: includes/listing-functions.php:328 public/view_stats.php:17
+#: includes/listing-functions.php:379 public/view_stats.php:17
 msgid "November"
 msgstr ""
 
-#: includes/listing-functions.php:329 public/view_stats.php:18
+#: includes/listing-functions.php:380 public/view_stats.php:18
 msgid "December"
 msgstr ""
 
-#: includes/listing-functions.php:431
+#: includes/listing-functions.php:485
 msgid "Edit"
 msgstr ""
 
-#: includes/listing-functions.php:439
+#: includes/listing-functions.php:493
 msgid "Add"
 msgstr ""
 
-#: includes/listing-functions.php:447
+#: includes/listing-functions.php:501
 msgid "No Permission."
 msgstr ""
 
-#: includes/listing-functions.php:451
+#: includes/listing-functions.php:505
 msgid "WPMP Plugin Required."
 msgstr ""
 
-#: includes/listing-functions.php:515 includes/profile-functions.php:417
-#: includes/profile-functions.php:444
+#: includes/listing-functions.php:528 includes/profile-functions.php:423
+#: includes/profile-functions.php:450
 msgid "Close"
-msgstr ""
-
-#: includes/listing-functions.php:535 includes/listing-functions.php:595
-#: includes/profile-functions.php:12
-msgid "No kiddies please!"
 msgstr ""
 
 #: includes/panel-functions.php:71
@@ -811,7 +813,7 @@ msgstr ""
 msgid "Profile Updated!"
 msgstr ""
 
-#: includes/profile-functions.php:87 includes/profile-functions.php:464
+#: includes/profile-functions.php:87 includes/profile-functions.php:470
 msgid "No kiddies please."
 msgstr ""
 
@@ -835,139 +837,143 @@ msgstr ""
 msgid "Something went wrong, please try again"
 msgstr ""
 
-#: includes/profile-functions.php:157
+#: includes/profile-functions.php:158
 msgid "Image Updated!"
 msgstr ""
 
-#: includes/profile-functions.php:164 includes/profile-functions.php:195
+#: includes/profile-functions.php:163
+msgid "Uploaded Image Type is Not Allowed!"
+msgstr ""
+
+#: includes/profile-functions.php:168 includes/profile-functions.php:201
 msgid "Error!"
 msgstr ""
 
-#: includes/profile-functions.php:188
+#: includes/profile-functions.php:194
 msgid "Profile Photo Removed!"
 msgstr ""
 
-#: includes/profile-functions.php:212
+#: includes/profile-functions.php:218
 msgid "Email verification code"
 msgstr ""
 
-#: includes/profile-functions.php:219
+#: includes/profile-functions.php:225
 msgid ""
 "verification code has been sent to your registered email id, Please check your "
 "inbox and provide verification code in input filed below"
 msgstr ""
 
-#: includes/profile-functions.php:222
+#: includes/profile-functions.php:228
 msgid "failed"
 msgstr ""
 
-#: includes/profile-functions.php:239
+#: includes/profile-functions.php:245
 msgid "email verified successfully"
 msgstr ""
 
-#: includes/profile-functions.php:243 includes/profile-functions.php:294
+#: includes/profile-functions.php:249 includes/profile-functions.php:300
 msgid "Please provide valid verification code"
 msgstr ""
 
-#: includes/profile-functions.php:265
+#: includes/profile-functions.php:271
 msgid ""
 "verification code has been sent to your registered Phone number, Please check "
 "your inbox and provide verification code in input filed below"
 msgstr ""
 
-#: includes/profile-functions.php:271
+#: includes/profile-functions.php:277
 msgid "Aww!, there was an error."
 msgstr ""
 
-#: includes/profile-functions.php:290
+#: includes/profile-functions.php:296
 msgid "Phone number verified successfully"
 msgstr ""
 
-#: includes/profile-functions.php:311 includes/profile-functions.php:315
-#: includes/profile-functions.php:361 includes/profile-functions.php:365
-#: includes/profile-functions.php:402 public/profile.php:37 public/profile.php:40
+#: includes/profile-functions.php:317 includes/profile-functions.php:321
+#: includes/profile-functions.php:367 includes/profile-functions.php:371
+#: includes/profile-functions.php:408 public/profile.php:37 public/profile.php:40
 msgid "Email Verification"
 msgstr ""
 
-#: includes/profile-functions.php:312 includes/profile-functions.php:323
-#: includes/profile-functions.php:362 includes/profile-functions.php:373
+#: includes/profile-functions.php:318 includes/profile-functions.php:329
+#: includes/profile-functions.php:368 includes/profile-functions.php:379
 msgid "verified"
 msgstr ""
 
-#: includes/profile-functions.php:316 includes/profile-functions.php:327
-#: includes/profile-functions.php:366 includes/profile-functions.php:377
+#: includes/profile-functions.php:322 includes/profile-functions.php:333
+#: includes/profile-functions.php:372 includes/profile-functions.php:383
 #: public/email_verification_required.php:4 public/profile.php:41
 #: public/profile.php:49
 msgid "verify"
 msgstr ""
 
-#: includes/profile-functions.php:322 includes/profile-functions.php:326
-#: includes/profile-functions.php:372 includes/profile-functions.php:376
-#: includes/profile-functions.php:429 public/profile.php:45 public/profile.php:48
+#: includes/profile-functions.php:328 includes/profile-functions.php:332
+#: includes/profile-functions.php:378 includes/profile-functions.php:382
+#: includes/profile-functions.php:435 public/profile.php:45 public/profile.php:48
 msgid "Phone Verification"
 msgstr ""
 
-#: includes/profile-functions.php:333
+#: includes/profile-functions.php:339
 msgid "User Verification"
 msgstr ""
 
-#: includes/profile-functions.php:407
+#: includes/profile-functions.php:413
 msgid ""
 "Click Get New link for verification code, Code will be sent to your registered "
 "email."
 msgstr ""
 
-#: includes/profile-functions.php:410 includes/profile-functions.php:437
+#: includes/profile-functions.php:416 includes/profile-functions.php:443
 msgid "Insert Verification Code"
 msgstr ""
 
-#: includes/profile-functions.php:412
+#: includes/profile-functions.php:418
 msgid "Verify E-mail"
 msgstr ""
 
-#: includes/profile-functions.php:413 includes/profile-functions.php:440
+#: includes/profile-functions.php:419 includes/profile-functions.php:446
 msgid "Get New"
 msgstr ""
 
-#: includes/profile-functions.php:434
+#: includes/profile-functions.php:440
 msgid ""
 "Click Get New link for verification code, Code will be sent to your registered "
 "Phone Number."
 msgstr ""
 
-#: includes/profile-functions.php:439
+#: includes/profile-functions.php:445
 msgid "Verify Phone"
 msgstr ""
 
-#: includes/profile-functions.php:475
+#: includes/profile-functions.php:481
 msgid "Account Deleted Permanently!"
 msgstr ""
 
-#: includes/profile-functions.php:480
+#: includes/profile-functions.php:486
 msgid "Something went wrong, please try again."
 msgstr ""
 
-#: includes/profile-functions.php:484
+#: includes/profile-functions.php:490
 msgid "You Can not delete Administrator Account Here."
 msgstr ""
 
-#: includes/profile-functions.php:488
+#: includes/profile-functions.php:494
 msgid "You are not allowed to perform this action."
 msgstr ""
 
-#: includes/profile-functions.php:507 public/profile.php:114
+#: includes/profile-functions.php:513 public/profile.php:114
 msgid "Close Your Account"
 msgstr ""
 
-#: includes/profile-functions.php:511
+#: includes/profile-functions.php:517
 msgid "Are you sure? Be aware this action can not undo."
 msgstr ""
 
-#: includes/profile-functions.php:516
+#: includes/profile-functions.php:522
 msgid "Delete Account"
 msgstr ""
 
-#: includes/profile-functions.php:517 public/claim_process.php:16
+#: includes/profile-functions.php:523 public/claim_process.php:16
 #: public/raise_up.php:13 public/renew.php:12 public/upgrade.php:22
 msgid "Cancel"
 msgstr ""

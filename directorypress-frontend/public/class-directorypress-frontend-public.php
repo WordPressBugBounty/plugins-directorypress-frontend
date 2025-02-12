@@ -30,6 +30,7 @@ class Directorypress_Frontend_Public {
 		wp_enqueue_script( 'chart-js', DPFL_URL . 'assets/js/chart.min.js', array( 'jquery' ), $this->version, false );
 		wp_localize_script($this->plugin_name, 'dpfl_custom_vars', array(
 			'ajaxurl' => admin_url('admin-ajax.php'),
+			'nonce' => wp_create_nonce('directorypress-frontend-ajax-nonce')
 		));
 	}
 

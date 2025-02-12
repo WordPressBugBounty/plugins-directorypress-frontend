@@ -4,11 +4,12 @@
  * Plugin Name:       DirectoryPress Frontend
  * Plugin URI:        https://designinvento.net/downloads/directorypress-frontend-listing-addon/
  * Description:       Frontend Ads listing functionality for DirectoryPress Plugin.
- * Version:           2.7.9
+ * Version:           2.8.0
  * Author:            Designinvento
  * Author URI:        https://designinvento.net
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * Requires Plugins: directorypress
  * Text Domain:       directorypress-frontend
  * Domain Path:       /languages
  */
@@ -18,18 +19,12 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define( 'DIRECTORYPRESS_FRONTEND_VERSION', '2.7.9' );
+define( 'DIRECTORYPRESS_FRONTEND_VERSION', '2.8.0' );
 define('DPFL_PATH', plugin_dir_path(__FILE__));
 define('DPFL_URL', plugins_url('/', __FILE__));
 define( 'DPFL_TEMPLATES_PATH', DPFL_PATH . 'public/');
 
-if(is_admin() && in_array('directorypress/directorypress.php', apply_filters('active_plugins', get_option('active_plugins')))){
-	require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-	$directorypress_data = get_plugin_data( WP_PLUGIN_DIR .'/directorypress/directorypress.php' );
-	if(version_compare($directorypress_data['Version'], '3.5.0', '<') ){
-		deactivate_plugins(plugin_basename(__FILE__));
-	}
-}
+
 function activate_directorypress_frontend() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-directorypress-frontend-activator.php';
 	Directorypress_Frontend_Activator::activate();

@@ -2,8 +2,12 @@
 
 // Admin Notice
 if( !function_exists('dpfl_AdminNote_html') ){
-	function dpfl_AdminNote_html(){            	
-        $response 	= array(); 
+	function dpfl_AdminNote_html(){
+
+		// Check for nonce security      
+		if ( ! wp_verify_nonce( $_POST['nonce'], 'directorypress-frontend-ajax-nonce' ) ) {
+			 die ( 'No Kiddies!');
+		} 
 		
 		$listing_id = !empty( $_POST['listing_id'] ) ? sanitize_text_field( $_POST['listing_id'] ) : '';
 		if(metadata_exists('post', $listing_id, '_notice_to_admin' ) ) {
@@ -15,6 +19,7 @@ if( !function_exists('dpfl_AdminNote_html') ){
 		echo '<form class="note_to_admin_listing_form">';
 			echo '<textarea name="_notice_to_admin" row="35" placeholder="'. esc_attr($content) .'"></textarea>';
 			echo '<input type="hidden" name="listing_id" value="'. esc_attr($listing_id) .'">';
+			wp_nonce_field('dpfl_listing_actions', 'dpfl_listing_actions');
 		echo '</form>';
 		
 		die;		
@@ -27,20 +32,25 @@ if( !function_exists('dpfl_AdminNote') ){
 		global $directorypress_object;
 		$user 		= wp_get_current_user();              	
         $response 	= array(); 
-		
-		$listing_id = !empty( $_POST['listing_id'] ) ? sanitize_text_field( $_POST['listing_id'] ) : '';
-        $content  = !empty($_POST['_notice_to_admin']) ? sanitize_textarea_field($_POST['_notice_to_admin']) : '';
-		
-		if ($listing_id && directorypress_user_permission_to_edit_listing($listing_id) && ($listing = $directorypress_object->listings_handler_property->init_listing($listing_id))) {
+		$do_check = check_ajax_referer('dpfl_listing_actions', 'dpfl_listing_actions', false);
+        if ($do_check == false) {
+            $response['type'] = 'error';
+            $response['message'] = esc_html__('No kiddies please!', 'directorypress-frontend');
+                        
+        }else{
+			$listing_id = !empty( $_POST['listing_id'] ) ? sanitize_text_field( $_POST['listing_id'] ) : '';
+			$content  = !empty($_POST['_notice_to_admin']) ? sanitize_textarea_field($_POST['_notice_to_admin']) : '';
+			
+			if ($listing_id && directorypress_user_permission_to_edit_listing($listing_id) && ($listing = $directorypress_object->listings_handler_property->init_listing($listing_id))) {
 				update_post_meta($listing_id, '_notice_to_admin', $content);
 				$response['type'] = 'success';
 				$response['message'] = esc_html__('Message Sent!', 'directorypress-frontend');
-				wp_send_json($response); 
-		}else{
-			$response['type'] = 'error';
-			$response['message'] = esc_html__('Error: You can not Manage this listing', 'directorypress-frontend');
-			wp_send_json($response); 
+			}else{
+				$response['type'] = 'error';
+				$response['message'] = esc_html__('Error: You can not Manage this listing', 'directorypress-frontend');
+			}
 		}
+		wp_send_json($response);
 	}
 	add_action('wp_ajax_dpfl_AdminNote', 'dpfl_AdminNote');
     add_action('wp_ajax_nopriv_dpfl_AdminNote', 'dpfl_AdminNote');
@@ -55,6 +65,7 @@ if( !function_exists('dpfl_deleteListing_html') ){
 		echo '<div class="alert alert-warning">'. esc_html__('Listing will be deleted permanently along with all data.', 'directorypress-frontend').'</div>';
 		echo '<form class="delete_listing_form">';
 			echo '<input type="hidden" name="listing_id" value="'. esc_attr($listing_id) .'">';
+			wp_nonce_field('dpfl_listing_actions', 'dpfl_listing_actions');
 		echo '</form>';
 		die;		
 	}
@@ -66,25 +77,30 @@ if( !function_exists('dpfl_deleteListing') ){
 		global $directorypress_object;
 		$user 		= wp_get_current_user();              	
         $response 	= array(); 
-		
-		$listing_id = !empty( $_POST['listing_id'] ) ? sanitize_text_field( $_POST['listing_id'] ) : '';
-		if ($listing_id && directorypress_user_permission_to_edit_listing($listing_id) && ($listing = $directorypress_object->listings_handler_property->init_listing($listing_id))) {
-				if (wp_delete_post($listing_id, true) !== FALSE) {
-					$directorypress_object->listings_handler_property->delete_listing_data($listing_id);
-					$response['type'] = 'success';
-					$response['message'] = esc_html__('Deleted Sucessfully!', 'directorypress-frontend');
-					wp_send_json($response);
-					die();
-				}else{
-					$response['type'] = 'error';
-					$response['message'] = esc_html__('Error: not allowed', 'directorypress-frontend');
-					wp_send_json($response); 
-				}
-		}else{
-			$response['type'] = 'error';
-			$response['message'] = esc_html__('Error: You can not Delete this listing', 'directorypress-frontend');
-			wp_send_json($response); 
+		$do_check = check_ajax_referer('dpfl_listing_actions', 'dpfl_listing_actions', false);
+        if ($do_check == false) {
+            $response['type'] = 'error';
+            $response['message'] = esc_html__('No kiddies please!', 'directorypress-frontend');
+                        
+        }else{
+			$listing_id = !empty( $_POST['listing_id'] ) ? sanitize_text_field( $_POST['listing_id'] ) : '';
+			if ($listing_id && directorypress_user_permission_to_edit_listing($listing_id) && ($listing = $directorypress_object->listings_handler_property->init_listing($listing_id))) {
+					if (wp_delete_post($listing_id, true) !== FALSE) {
+						$directorypress_object->listings_handler_property->delete_listing_data($listing_id);
+						$response['type'] = 'success';
+						$response['message'] = esc_html__('Deleted Sucessfully!', 'directorypress-frontend');
+						wp_send_json($response);
+						die();
+					}else{
+						$response['type'] = 'error';
+						$response['message'] = esc_html__('Error: not allowed', 'directorypress-frontend'); 
+					}
+			}else{
+				$response['type'] = 'error';
+				$response['message'] = esc_html__('Error: You can not Delete this listing', 'directorypress-frontend');
+			}
 		}
+		wp_send_json($response); 
 	}
 	add_action('wp_ajax_dpfl_deleteListing', 'dpfl_deleteListing');
     add_action('wp_ajax_nopriv_dpfl_deleteListing', 'dpfl_deleteListing');
@@ -99,6 +115,7 @@ if( !function_exists('dpfl_bumpUpListing_html') ){
 		echo '<div class="alert alert-info">'. esc_html__('Listing will be BumpedUp to the top of all listings.', 'directorypress-frontend').'</div>';
 		echo '<form class="bumpup_listing_form">';
 			echo '<input type="hidden" name="listing_id" value="'. esc_attr($listing_id) .'">';
+			wp_nonce_field('dpfl_listing_actions', 'dpfl_listing_actions');
 		echo '</form>';
 		die;		
 	}
@@ -110,24 +127,31 @@ if( !function_exists('dpfl_bumpUpListing') ){
 		global $directorypress_object;
 		$user 		= wp_get_current_user();              	
         $response 	= array(); 
-		$dashboard_object = new directorypress_dashboard_handler();
-		$listing_id = !empty( $_POST['listing_id'] ) ? sanitize_text_field( $_POST['listing_id'] ) : '';
-		
-		if (directorypress_user_permission_to_edit_listing($listing_id)) {
-			$listing = directorypress_get_listing($listing_id);
-			$dashboard_object->action = 'show';
-			if ($listing->process_bumpup()){
-				$dashboard_object->action = 'raiseup';
+		$do_check = check_ajax_referer('dpfl_listing_actions', 'dpfl_listing_actions', false);
+        if ($do_check == false) {
+            $response['type'] = 'error';
+            $response['message'] = esc_html__('No kiddies please!', 'directorypress-frontend');
+                        
+        }else{
+			$dashboard_object = new directorypress_dashboard_handler();
+			$listing_id = !empty( $_POST['listing_id'] ) ? sanitize_text_field( $_POST['listing_id'] ) : '';
+			
+			if (directorypress_user_permission_to_edit_listing($listing_id)) {
+				$listing = directorypress_get_listing($listing_id);
+				$dashboard_object->action = 'show';
+				if ($listing->process_bumpup()){
+					$dashboard_object->action = 'raiseup';
+					$response['type'] = 'success';
+					$response['message'] = esc_html__('Listing BumpUp To Top', 'directorypress-frontend');
+				}else{
+					
 				$response['type'] = 'success';
-				$response['message'] = esc_html__('Listing BumpUp To Top', 'directorypress-frontend');
+				$response['message'] = esc_html__('Notice: An order has been created, please pay by going to your orders to complete Bumpup process.', 'directorypress-frontend');
+				}
 			}else{
-				
-			$response['type'] = 'success';
-			$response['message'] = esc_html__('Notice: An order has been created, please pay by going to your orders to complete Bumpup process.', 'directorypress-frontend');
+				$response['type'] = 'error';
+				$response['message'] = esc_html__('Error: Not Allowed', 'directorypress-frontend');
 			}
-		}else{
-			$response['type'] = 'error';
-			$response['message'] = esc_html__('Error: Not Allowed', 'directorypress-frontend');
 		}
 		wp_send_json($response); 		
 	}
@@ -145,6 +169,7 @@ if( !function_exists('dpfl_renewListing_html') ){
 		echo '<div class="alert alert-info">'. esc_html__('Listing will be Renewed as per purchased plan, Payment may apply if applicable.', 'directorypress-frontend').'</div>';
 		echo '<form class="renew_listing_form">';
 			echo '<input type="hidden" name="listing_id" value="'. esc_attr($listing_id) .'">';
+			wp_nonce_field('dpfl_listing_actions', 'dpfl_listing_actions');
 		echo '</form>';
 		die;
 	}
@@ -156,24 +181,32 @@ if( !function_exists('dpfl_renewListing') ){
 		global $directorypress_object;
 		$user 		= wp_get_current_user();              	
         $response 	= array(); 
-		$dashboard_object = new directorypress_dashboard_handler();
-		$listing_id = !empty( $_POST['listing_id'] ) ? sanitize_text_field( $_POST['listing_id'] ) : '';
+		$do_check = check_ajax_referer('dpfl_listing_actions', 'dpfl_listing_actions', false);
+        if ($do_check == false) {
+            $response['type'] = 'error';
+            $response['message'] = esc_html__('No kiddies please!', 'directorypress-frontend');
+                        
+        }else{
 		
-		if (directorypress_user_permission_to_edit_listing($listing_id)) {
-			$listing = directorypress_get_listing($listing_id);
-			$dashboard_object->action = 'show';
-			if ($listing->process_activation(true)){
-				$dashboard_object->action = 'renew';
-				$response['type'] = 'success';
-				$response['message'] = esc_html__('Listing Renewed Sucessfully', 'directorypress-frontend');
+			$dashboard_object = new directorypress_dashboard_handler();
+			$listing_id = !empty( $_POST['listing_id'] ) ? sanitize_text_field( $_POST['listing_id'] ) : '';
+			
+			if (directorypress_user_permission_to_edit_listing($listing_id)) {
+				$listing = directorypress_get_listing($listing_id);
+				$dashboard_object->action = 'show';
+				if ($listing->process_activation(true)){
+					$dashboard_object->action = 'renew';
+					$response['type'] = 'success';
+					$response['message'] = esc_html__('Listing Renewed Sucessfully', 'directorypress-frontend');
+				}else{
+					
+					$response['type'] = 'success';
+					$response['message'] = esc_html__('Notice: An order has been created, please pay by going to your orders to complete Renew process.', 'directorypress-frontend');
+				}
 			}else{
-				
-				$response['type'] = 'success';
-				$response['message'] = esc_html__('Notice: An order has been created, please pay by going to your orders to complete Renew process.', 'directorypress-frontend');
+				$response['type'] = 'error';
+				$response['message'] = esc_html__('Error: Not Allowed', 'directorypress-frontend');
 			}
-		}else{
-			$response['type'] = 'error';
-			$response['message'] = esc_html__('Error: Not Allowed', 'directorypress-frontend');
 		}
 		wp_send_json($response);
 	}
@@ -197,6 +230,7 @@ if( !function_exists('dpfl_upgradeListing_html') ){
 				}
 			}
 			echo '<input type="hidden" name="listing_id" value="'. esc_attr($listing_id) .'">';
+			wp_nonce_field('dpfl_listing_actions', 'dpfl_listing_actions');
 		echo '</form>';
 		die;
 	}
@@ -208,32 +242,38 @@ if( !function_exists('dpfl_upgradeListing') ){
 		global $directorypress_object;
 		$user 		= wp_get_current_user();              	
         $response 	= array(); 
-		
-		$listing_id = !empty( $_POST['listing_id'] ) ? sanitize_text_field( $_POST['listing_id'] ) : '';
-		$new_package_id = !empty( $_POST['new_package_id'] ) ? sanitize_text_field($_POST['new_package_id']) : '';
-		if (directorypress_user_permission_to_edit_listing($listing_id) && ($listing = directorypress_get_listing($listing_id)) /* && $listing->status == 'active' */) {
-			$directorypress_object->action = 'show';
-			
-			$directorypress_form_validation = new directorypress_form_validation();
-			$directorypress_form_validation->set_rules('new_package_id', __('New package ID', 'directorypress-frontend'), 'required|integer');
+		$do_check = check_ajax_referer('dpfl_listing_actions', 'dpfl_listing_actions', false);
+        if ($do_check == false) {
+            $response['type'] = 'error';
+            $response['message'] = esc_html__('No kiddies please!', 'directorypress-frontend');
+                        
+        }else{
+			$listing_id = !empty( $_POST['listing_id'] ) ? sanitize_text_field( $_POST['listing_id'] ) : '';
+			$new_package_id = !empty( $_POST['new_package_id'] ) ? sanitize_text_field($_POST['new_package_id']) : '';
+			if (directorypress_user_permission_to_edit_listing($listing_id) && ($listing = directorypress_get_listing($listing_id)) /* && $listing->status == 'active' */) {
+				$directorypress_object->action = 'show';
+				
+				$directorypress_form_validation = new directorypress_form_validation();
+				$directorypress_form_validation->set_rules('new_package_id', __('New package ID', 'directorypress-frontend'), 'required|integer');
 
-			if ($directorypress_form_validation->run()) {
-				if ($listing->change_listing_package($directorypress_form_validation->result_array('new_package_id'))){
+				if ($directorypress_form_validation->run()) {
+					if ($listing->change_listing_package($directorypress_form_validation->result_array('new_package_id'))){
+							
+						$directorypress_object->action = 'upgrade';
+						$response['message'] = esc_html__('Upgraded Sucessfully!', 'directorypress-frontend');
 						
-					$directorypress_object->action = 'upgrade';
-					$response['message'] = esc_html__('Upgraded Sucessfully!', 'directorypress-frontend');
-					
+					}else{
+						$response['message'] = esc_html__('Notice: An order has been created, please pay by going to your orders to complete upgradation.', 'directorypress-frontend');
+					}
+					$response['type'] = 'success';
 				}else{
-					$response['message'] = esc_html__('Notice: An order has been created, please pay by going to your orders to complete upgradation.', 'directorypress-frontend');
+					$response['type'] = 'error';
+					$response['message'] = esc_html__('Something Went Wrong, Please Try Again', 'directorypress-frontend');
 				}
-				$response['type'] = 'success';
 			}else{
 				$response['type'] = 'error';
-				$response['message'] = esc_html__('Something Went Wrong, Please Try Again', 'directorypress-frontend');
+				$response['message'] = esc_html__('Not Allowed', 'directorypress-frontend');
 			}
-		}else{
-			$response['type'] = 'error';
-			$response['message'] = esc_html__('Not Allowed', 'directorypress-frontend');
 		}
 		wp_send_json($response);
 	}
@@ -246,7 +286,10 @@ if( !function_exists('dpfl_upgradeListing') ){
 // Listing Change Status
 if( !function_exists('dpfl_listingStatusChange_triger') ){
 	function dpfl_listingStatusChange_triger(){ 
-		
+		// Check for nonce security      
+		if ( ! wp_verify_nonce( $_POST['nonce'], 'directorypress-frontend-ajax-nonce' ) ) {
+			 die ( 'No Kiddies!');
+		} 
 		$listing_id = !empty( $_POST['listing_id'] ) ? sanitize_text_field( $_POST['listing_id'] ) : '';
 		if ($listing_id && directorypress_user_permission_to_edit_listing($listing_id)) {
 			$current_status = get_post_status ( $listing_id); 
@@ -273,26 +316,29 @@ if( !function_exists('dpfl_listingStatusChange_triger') ){
 if( !function_exists('dpfl_listingStatusChange') ){
 	function dpfl_listingStatusChange(){           	
         $response 	= array(); 
-		
-		$listing_id = !empty( $_POST['listing_id'] ) ? sanitize_text_field( $_POST['listing_id'] ) : '';
-		$current_status = get_post_status ($listing_id); 
-		if ($listing_id && directorypress_user_permission_to_edit_listing($listing_id)) {
-			if($current_status == 'private'){
-				wp_update_post(array('ID' => $listing_id, 'post_status' => 'publish'));
-				$response['message'] = esc_html__('Listing Status Changed to Publish Sucessfully!', 'directorypress-frontend');
-				$response['button_text'] = esc_html__('Make Private', 'directorypress-frontend');
-			}else{
-				wp_update_post(array('ID' => $listing_id, 'post_status' => 'private'));
-				$response['message'] = esc_html__('Listing Status Changed to Private Sucessfully!', 'directorypress-frontend');
-				$response['button_text'] = esc_html__('Publish', 'directorypress-frontend');
-			}
-			$response['type'] = 'success';
-		}else{
+		if ( ! wp_verify_nonce( $_POST['nonce'], 'directorypress-frontend-ajax-nonce' ) ) {
 			$response['type'] = 'error';
-			$response['message'] = esc_html__('Error: not allowed', 'directorypress-frontend');
-			
+            $response['message'] = esc_html__('No kiddies please!', 'directorypress-frontend');
+		}else{
+			$listing_id = !empty( $_POST['listing_id'] ) ? sanitize_text_field( $_POST['listing_id'] ) : '';
+			$current_status = get_post_status ($listing_id); 
+			if ($listing_id && directorypress_user_permission_to_edit_listing($listing_id)) {
+				if($current_status == 'private'){
+					wp_update_post(array('ID' => $listing_id, 'post_status' => 'publish'));
+					$response['message'] = esc_html__('Listing Status Changed to Publish Sucessfully!', 'directorypress-frontend');
+					$response['button_text'] = esc_html__('Make Private', 'directorypress-frontend');
+				}else{
+					wp_update_post(array('ID' => $listing_id, 'post_status' => 'private'));
+					$response['message'] = esc_html__('Listing Status Changed to Private Sucessfully!', 'directorypress-frontend');
+					$response['button_text'] = esc_html__('Publish', 'directorypress-frontend');
+				}
+				$response['type'] = 'success';
+			}else{
+				$response['type'] = 'error';
+				$response['message'] = esc_html__('Error: not allowed', 'directorypress-frontend');
+				
+			}
 		}
-		
 		wp_send_json($response); 
 	}
 	add_action('wp_ajax_dpfl_listingStatusChange', 'dpfl_listingStatusChange');
@@ -302,9 +348,14 @@ if( !function_exists('dpfl_listingStatusChange') ){
 // listing performance ajax
 if( !function_exists('directorypress_listing_peformance') ){
 	function directorypress_listing_peformance(){
-		$listing_id = !empty( $_POST['listing_id'] ) ? sanitize_text_field( $_POST['listing_id'] ) : ''; 
-		return directorypress_listing_peformance_data($listing_id);
-		die;
+		// Check for nonce security      
+		if ( ! wp_verify_nonce( $_POST['nonce'], 'directorypress-frontend-ajax-nonce' ) ) {
+			 die ( 'No Kiddies!');
+		}else{ 
+			$listing_id = !empty( $_POST['listing_id'] ) ? sanitize_text_field( $_POST['listing_id'] ) : ''; 
+			return directorypress_listing_peformance_data($listing_id);
+			die;
+		}
 
 	}
 	add_action('wp_ajax_directorypress_listing_peformance', 'directorypress_listing_peformance');
@@ -410,93 +461,55 @@ if( !function_exists('directorypress_listing_peformance_data') ){
 // Listing Change Status
 if( !function_exists('dpfl_listingtrans_html') ){
 	function dpfl_listingtrans_html(){ 
-		
-		$listing_id = !empty( $_POST['listing_id'] ) ? sanitize_text_field( $_POST['listing_id'] ) : '';
-		global $sitepress, $DIRECTORYPRESS_ADIMN_SETTINGS;
-		if (function_exists('wpml_object_id_filter') && $sitepress && $DIRECTORYPRESS_ADIMN_SETTINGS['directorypress_enable_frontend_translations'] && ($languages = $sitepress->get_active_languages()) && count($languages) > 1){
-			if (directorypress_user_permission_to_edit_listing($listing_id)){
-														
-				$trid = $sitepress->get_element_trid($listing_id, 'post_' . DIRECTORYPRESS_POST_TYPE);
-				$translations = $sitepress->get_element_translations($trid);
-				foreach ($languages AS $lang_code=>$lang):
+		// Check for nonce security      
+		if ( ! wp_verify_nonce( $_POST['nonce'], 'directorypress-frontend-ajax-nonce' ) ) {
+			 die ( 'No Kiddies!');
+		}else{
+			$listing_id = !empty( $_POST['listing_id'] ) ? sanitize_text_field( $_POST['listing_id'] ) : '';
+			global $sitepress, $DIRECTORYPRESS_ADIMN_SETTINGS;
+			if (function_exists('wpml_object_id_filter') && $sitepress && $DIRECTORYPRESS_ADIMN_SETTINGS['directorypress_enable_frontend_translations'] && ($languages = $sitepress->get_active_languages()) && count($languages) > 1){
+				if (directorypress_user_permission_to_edit_listing($listing_id)){
+															
+					$trid = $sitepress->get_element_trid($listing_id, 'post_' . DIRECTORYPRESS_POST_TYPE);
+					$translations = $sitepress->get_element_translations($trid);
+					foreach ($languages AS $lang_code=>$lang):
+					
+						if ($lang_code != ICL_LANGUAGE_CODE){
+							$lang_details = $sitepress->get_language_details($lang_code);
+							do_action('wpml_switch_language', $lang_code);
+							if (isset($translations[$lang_code])){
+								echo '<div class="translation-language clearfix">';
+									echo '<span class="language-flag"><img src="'. esc_url($sitepress->get_flag_url( $lang_code )) .'" /></span>';
+									echo '<span class="language-label">'. esc_html($lang_details['display_name']).'</span>';
+									echo '<span class="language-action">';
+										echo '<a class="btn btn-primary" href="'. add_query_arg(array('directorypress_action' => 'edit_advert', 'listing_id' => apply_filters('wpml_object_id', $listing_id, DIRECTORYPRESS_POST_TYPE, true, $lang_code)), get_permalink(apply_filters('wpml_object_id', $directorypress_object->dashboard_page_id, 'page', true, $lang_code))).'">'. esc_html__('Edit', 'sitepress').'</a>';
+									echo '</span>';
+								echo '</div>';
+							}else{
+								echo '<div class="translation-language clearfix">';
+									echo '<span class="language-flag"><img src="'. esc_url($sitepress->get_flag_url( $lang_code )) .'" /></span>';
+									echo '<span class="language-label">'. esc_html($lang_details['display_name']) .'</span>';
+									echo '<span class="language-action">';
+										echo '<a class="btn btn-primary" href="'. directorypress_dashboardUrl(array('directorypress_action' => 'add_translation', 'listing_id' => $listing_id, 'to_lang' => $lang_code)).'">'. esc_html__('Add', 'sitepress').'</a>';
+									echo '</span>';
+								echo '</div>';
+							}
+						}		
+					endforeach;
+					do_action('wpml_switch_language', ICL_LANGUAGE_CODE);
+				}else{
+					echo '<div class="alert alert-warning">'. esc_html__('No Permission.', 'directorypress-frontend').'</div>';
+				}
 				
-					if ($lang_code != ICL_LANGUAGE_CODE){
-						$lang_details = $sitepress->get_language_details($lang_code);
-						do_action('wpml_switch_language', $lang_code);
-						if (isset($translations[$lang_code])){
-							echo '<div class="translation-language clearfix">';
-								echo '<span class="language-flag"><img src="'. esc_url($sitepress->get_flag_url( $lang_code )) .'" /></span>';
-								echo '<span class="language-label">'. esc_html($lang_details['display_name']).'</span>';
-								echo '<span class="language-action">';
-									echo '<a class="btn btn-primary" href="'. add_query_arg(array('directorypress_action' => 'edit_advert', 'listing_id' => apply_filters('wpml_object_id', $listing_id, DIRECTORYPRESS_POST_TYPE, true, $lang_code)), get_permalink(apply_filters('wpml_object_id', $directorypress_object->dashboard_page_id, 'page', true, $lang_code))).'">'. esc_html__('Edit', 'sitepress').'</a>';
-								echo '</span>';
-							echo '</div>';
-						}else{
-							echo '<div class="translation-language clearfix">';
-								echo '<span class="language-flag"><img src="'. esc_url($sitepress->get_flag_url( $lang_code )) .'" /></span>';
-								echo '<span class="language-label">'. esc_html($lang_details['display_name']) .'</span>';
-								echo '<span class="language-action">';
-									echo '<a class="btn btn-primary" href="'. directorypress_dashboardUrl(array('directorypress_action' => 'add_translation', 'listing_id' => $listing_id, 'to_lang' => $lang_code)).'">'. esc_html__('Add', 'sitepress').'</a>';
-								echo '</span>';
-							echo '</div>';
-						}
-					}		
-				endforeach;
-				do_action('wpml_switch_language', ICL_LANGUAGE_CODE);
 			}else{
-				echo '<div class="alert alert-warning">'. esc_html__('No Permission.', 'directorypress-frontend').'</div>';
+				echo '<div class="alert alert-warning">'. esc_html__('WPMP Plugin Required.', 'directorypress-frontend').'</div>';
 			}
 			
-		}else{
-			echo '<div class="alert alert-warning">'. esc_html__('WPMP Plugin Required.', 'directorypress-frontend').'</div>';
+			die();
 		}
-		
-		die();
 	}
 	add_action('wp_ajax_dpfl_listingtrans_html', 'dpfl_listingtrans_html');
 	add_action('wp_ajax_nopriv_dpfl_listingtrans_html', 'dpfl_listingtrans_html');
-}
-
-if( !function_exists('dpfl_listingtrans') ){
-	function dpfl_listingtrans(){           	
-        $response 	= array(); 
-		
-		$listing_id = !empty( $_POST['listing_id'] ) ? sanitize_text_field( $_POST['listing_id'] ) : '';
-		$current_status = get_post_status ($listing_id); 
-		if ($listing_id && directorypress_user_permission_to_edit_listing($listing_id)) {
-			if($current_status == 'private'){
-				wp_update_post(array('ID' => $listing_id, 'post_status' => 'publish'));
-				$response['message'] = esc_html__('Listing Status Changed to Publish Sucessfully!', 'directorypress-frontend');
-			}else{
-				wp_update_post(array('ID' => $listing_id, 'post_status' => 'private'));
-				$response['message'] = esc_html__('Listing Status Changed to Private Sucessfully!', 'directorypress-frontend');
-			}
-			$response['type'] = 'success';
-		}else{
-			$response['type'] = 'error';
-			$response['message'] = esc_html__('Error: not allowed', 'directorypress-frontend');
-			
-		}
-		
-		wp_send_json($response); 
-	}
-	add_action('wp_ajax_dpfl_listingtrans', 'dpfl_listingtrans');
-    add_action('wp_ajax_nopriv_dpfl_listingtrans', 'dpfl_listingtrans');
-}
-
-if( !function_exists('dpfl_submit_listing_html') ){
-	function dpfl_submit_listing_html(){
-		$response 	= array(); 
-		$package = (!empty( $_POST['package'] )) ? sanitize_text_field($_POST['package']) : '';
-		$submit = new directorypress_submit_handler();
-		$args['selected_package'] = $package;
-		$submit->init($args);
-		echo $submit->display(); // phpcs: ok
-		
-		die;
-	}
-	add_action('wp_ajax_dpfl_submit_listing_html', 'dpfl_submit_listing_html');
-    add_action('wp_ajax_nopriv_dpfl_submit_listing_html', 'dpfl_submit_listing_html');
 }
 
 if( !function_exists('dpfl_action_modal_html') ){
@@ -529,10 +542,10 @@ if( !function_exists('dpfl_new_listng_submit') ){
 		$errors = '';
 		
 		// check security tokken first.
-		$do_check = check_ajax_referer('directorypress_submit', '_submit_nonce', false);
-		if ($do_check == false) {
+		
+		if ( ! wp_verify_nonce( $_POST['_submit_nonce'], 'directorypress_submit' ) ) {
 			$response['type'] = 'error';
-           $response = esc_html__('No kiddies please!', 'directorypress-extended-locations');        
+           $response = esc_html__('No kiddies please!', 'directorypress-frontend');        
         }
 		
 		$package = (!empty( $_POST['selected_package'] )) ? sanitize_text_field($_POST['selected_package']) : '';
@@ -589,35 +602,35 @@ if( !function_exists('dpfl_updatListingData') ){
 	function dpfl_updatListingData(){ 
 		global $directorypress_object;
         $response = array();
-		$do_check = check_ajax_referer('directorypress_edit', $_POST['_edit_nonce'], false);
-		if ($do_check == false) {
+		if ( ! wp_verify_nonce( $_POST['_edit_nonce'], 'directorypress_edit' ) ) {
 			$response['type'] = 'error';
-           $response['message'] = esc_html__('No kiddies please!', 'directorypress-extended-locations');        
-        }
+           $response['message'] = esc_html__('No kiddies please!', 'directorypress-frontend');        
+        }else{
 		
-		$args = $_POST;
-		$args['submit'] = 'submit';
-		$panel_instance = new directorypress_dashboard_handler();
-		$panel_instance->edit_listing($args);
-		
-		//response after submission
-		if($panel_instance->listing_saved == 1){
-			$redirect_to = $panel_instance->listing_redirect_link;
-			$response['type'] = 'success';
-			$response['redirect_to'] = $redirect_to;
-		}else{
-			 
-			$response['type'] = 'error';
-			 ob_start();
-				
-				foreach($panel_instance->errors AS $erorr){
-					echo '<div class="alert alert-danger alert-dismissible">'. esc_html($erorr) .'<a href="#" class="close" data-bs-dismiss="alert" aria-label="close">&times;</a></div>';
-				}
-				//print_r($response);
-				//die();
-				$response['message'] = ob_get_contents();
-			ob_end_clean();
-		} 
+			$args = $_POST;
+			$args['submit'] = 'submit';
+			$panel_instance = new directorypress_dashboard_handler();
+			$panel_instance->edit_listing($args);
+			
+			//response after submission
+			if($panel_instance->listing_saved == 1){
+				$redirect_to = $panel_instance->listing_redirect_link;
+				$response['type'] = 'success';
+				$response['redirect_to'] = $redirect_to;
+			}else{
+				 
+				$response['type'] = 'error';
+				 ob_start();
+					
+					foreach($panel_instance->errors AS $erorr){
+						echo '<div class="alert alert-danger alert-dismissible">'. esc_html($erorr) .'<a href="#" class="close" data-bs-dismiss="alert" aria-label="close">&times;</a></div>';
+					}
+					//print_r($response);
+					//die();
+					$response['message'] = ob_get_contents();
+				ob_end_clean();
+			} 
+		}
 		wp_send_json($response); 
 	}
 }

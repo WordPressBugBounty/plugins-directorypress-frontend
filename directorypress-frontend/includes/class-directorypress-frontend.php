@@ -50,7 +50,7 @@ class Directorypress_Frontend {
 
 		$plugin_i18n = new Directorypress_Frontend_i18n();
 
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
+		$this->loader->add_action( 'init', $plugin_i18n, 'load_plugin_textdomain' );
 
 	}
 	
@@ -73,7 +73,7 @@ class Directorypress_Frontend {
 	}
 	
 	public function run() {
-		$this->loader->run();
+		
 		global $directorypress_object, $directorypress_shortcodes_init, $DIRECTORYPRESS_ADIMN_SETTINGS;
 		if (!get_option('directorypress_installed_fsubmit'))
 			//directorypress_install_fsubmit();
@@ -114,6 +114,7 @@ class Directorypress_Frontend {
 		add_action('dpfl_render_template', array($this, 'check_custom_template'), 10, 2);
 		
 		add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts_styles'));
+		$this->loader->run();
 	}
 	public function register_widgets() {
 		

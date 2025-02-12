@@ -137,33 +137,39 @@ if( !function_exists('dpfl_profilePhoto') ){
 		$avatar_field = $data['avatar'];
 		if(!empty( $avatar_field )){
 			$avatar_id = dpfl_handle_image_upload( $avatar_field );
-			update_user_meta( $user->ID, 'avatar_id', $avatar_id);
+			if($avatar_id){
+				update_user_meta( $user->ID, 'avatar_id', $avatar_id);
 
-			// New Image Src
-			$avatar_id = get_user_meta( $user->ID, 'avatar_id', true );
-			
-			if(!empty($avatar_id) && is_numeric($avatar_id)) {
-				$author_avatar_url = wp_get_attachment_image_src( $avatar_id, 'full' ); 
-				$src = $author_avatar_url[0];
-				$params = array( 'width' => 270, 'height' => 270, 'crop' => true );
-				$params_sidebar = array( 'width' => 60, 'height' => 60, 'crop' => true );
-				$src = bfi_thumb($src, $params );
-				$src_sidebar = bfi_thumb($src, $params_sidebar );
-			} else { 
-				$src = get_avatar_url($user_ID, ['size' => '270']);	
-				$src_sidebar = get_avatar_url($user_ID, ['size' => '60']);
+				// New Image Src
+				$avatar_id = get_user_meta( $user->ID, 'avatar_id', true );
+				
+				if(!empty($avatar_id) && is_numeric($avatar_id)) {
+					$author_avatar_url = wp_get_attachment_image_src( $avatar_id, 'full' ); 
+					$src = $author_avatar_url[0];
+					$params = array( 'width' => 270, 'height' => 270, 'crop' => true );
+					$params_sidebar = array( 'width' => 60, 'height' => 60, 'crop' => true );
+					$src = bfi_thumb($src, $params );
+					$src_sidebar = bfi_thumb($src, $params_sidebar );
+				} else { 
+					$src = get_avatar_url($user_ID, ['size' => '270']);	
+					$src_sidebar = get_avatar_url($user_ID, ['size' => '60']);
+				}
+				$response['type'] = 'success';
+				$response['message'] = esc_html__('Image Updated!', 'directorypress-frontend');
+				$response['src'] = $src;
+				$response['src_sidebar'] = $src_sidebar;
+			}else{
+				$response['type'] = 'error';
+				$response['message'] = esc_html__('Uploaded Image Type is Not Allowed!', 'directorypress-frontend');
 			}
-			$response['type'] = 'success';
-			$response['message'] = esc_html__('Image Updated!', 'directorypress-frontend');
-			$response['src'] = $src;
-			$response['src_sidebar'] = $src_sidebar;
-			wp_send_json($response); 
 		
 		}else{
 			$response['type'] = 'error';
 			$response['message'] = esc_html__('Error!', 'directorypress-frontend');
-			wp_send_json($response); 
+			
 		}
+		
+		wp_send_json($response); 
 	}
 	add_action('wp_ajax_dpfl_profilePhoto', 'dpfl_profilePhoto');
 	add_action('wp_ajax_nopriv_dpfl_profilePhoto', 'dpfl_profilePhoto');
@@ -171,7 +177,7 @@ if( !function_exists('dpfl_profilePhoto') ){
 // Remove Profile Photo
 if( !function_exists('dpfl_removeProfilePhoto') ){
 	function dpfl_removeProfilePhoto(){
-		$user 		= wp_get_current_user();              	
+		$user = wp_get_current_user();              	
         $response 	= array(); 
 		
 		$remove_avatar = sanitize_text_field($_POST['remove_avatar']);

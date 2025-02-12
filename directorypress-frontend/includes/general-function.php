@@ -183,25 +183,36 @@ function directorypress_dashboardUrl($path = '') {
 // Image Upload Processor
 if( !function_exists('dpfl_handle_image_upload') ){
 	function dpfl_handle_image_upload( $file, $attach_to = 0 ){
-		$movefile = wp_handle_upload( $file, array( 'test_form' => false ) );
+		// Get the type of the uploaded file. This is returned as "type/extension"
+		$file_type = wp_check_filetype(basename($file['name']));
+		$uploaded_file_type = $file_type['type'];
+					
+		// Set an array containing a list of acceptable formats
+		$allowed_file_types = array('image/jpg', 'image/jpeg', 'image/gif', 'image/png');
+		// If the uploaded file is the right format
+		if (in_array($uploaded_file_type, $allowed_file_types)) {
+			$movefile = wp_handle_upload( $file, array( 'test_form' => false ) );
 
-		if( !empty( $movefile['url'] ) ){
-			$attachment = array(
-				'guid'           => $movefile['url'],
-				'post_mime_type' => $movefile['type'],
-				'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $movefile['file'] ) ),
-				'post_content'   => '',
-				'post_status'    => 'inherit'
-			);
+			if( !empty( $movefile['url'] ) ){
+				$attachment = array(
+					'guid'           => $movefile['url'],
+					'post_mime_type' => $movefile['type'],
+					'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $movefile['file'] ) ),
+					'post_content'   => '',
+					'post_status'    => 'inherit'
+				);
 
-			$attach_id = wp_insert_attachment( $attachment, $movefile['file'], $attach_to );
+				$attach_id = wp_insert_attachment( $attachment, $movefile['file'], $attach_to );
 
-			require_once( ABSPATH . 'wp-admin/includes/image.php' );
+				require_once( ABSPATH . 'wp-admin/includes/image.php' );
 
-			$attach_data = wp_generate_attachment_metadata( $attach_id, $movefile['file'] );
-			wp_update_attachment_metadata( $attach_id, $attach_data );
+				$attach_data = wp_generate_attachment_metadata( $attach_id, $movefile['file'] );
+				wp_update_attachment_metadata( $attach_id, $attach_data );
 
-			return $attach_id;
+				return $attach_id;
+			}
+		}else{
+			return false;
 		}
 	}
 }
