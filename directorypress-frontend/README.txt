@@ -4,7 +4,7 @@ Donate link: https://designinvento.net/
 Tags: business directory, classified, car dealer, directories, directory listing
 Requires at least: 6.0
 Tested up to: 6.7.2
-Stable tag: 2.8.0
+Stable tag: 2.8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,6 +60,10 @@ Addon provides ability to create Faqs for each listing from back-end and front-e
 3. Activate the plugin through the 'Plugins' screen in WordPress
 
 == Changelog ==
+=2.8.1=
+* security improvements.
+* translations updated.
+* minor fixes
 =2.8.0=
 * Directorypress 3.6.21 compatibility
 * additional security checks applied.

@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: DirectoryPress Frontend Listing\n"
-"POT-Creation-Date: 2025-02-13 01:28+0500\n"
+"POT-Creation-Date: 2025-04-07 23:27+0500\n"
 "PO-Revision-Date: 2020-02-19 17:40+0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -754,8 +754,8 @@ msgstr ""
 msgid "WPMP Plugin Required."
 msgstr ""
 
-#: includes/listing-functions.php:528 includes/profile-functions.php:423
-#: includes/profile-functions.php:450
+#: includes/listing-functions.php:528 includes/profile-functions.php:442
+#: includes/profile-functions.php:469
 msgid "Close"
 msgstr ""
 
@@ -809,171 +809,177 @@ msgstr ""
 msgid "WP Admin"
 msgstr ""
 
-#: includes/profile-functions.php:71
+#: includes/profile-functions.php:17 includes/profile-functions.php:96
+#: includes/profile-functions.php:145 includes/profile-functions.php:198
+#: includes/profile-functions.php:494
+msgid "This Action is disabled on demo site."
+msgstr ""
+
+#: includes/profile-functions.php:73
 msgid "Profile Updated!"
 msgstr ""
 
-#: includes/profile-functions.php:87 includes/profile-functions.php:470
+#: includes/profile-functions.php:91 includes/profile-functions.php:489
 msgid "No kiddies please."
 msgstr ""
 
-#: includes/profile-functions.php:93
+#: includes/profile-functions.php:100
 msgid "All the fields are required!"
 msgstr ""
 
-#: includes/profile-functions.php:104
+#: includes/profile-functions.php:111
 msgid "New password did not match!"
 msgstr ""
 
-#: includes/profile-functions.php:109
+#: includes/profile-functions.php:116
 msgid "Password Has Been Changed Successfully"
 msgstr ""
 
-#: includes/profile-functions.php:115
+#: includes/profile-functions.php:122
 msgid "Old password did not match"
 msgstr ""
 
-#: includes/profile-functions.php:120
+#: includes/profile-functions.php:127
 msgid "Something went wrong, please try again"
 msgstr ""
 
-#: includes/profile-functions.php:158
+#: includes/profile-functions.php:171
 msgid "Image Updated!"
 msgstr ""
 
-#: includes/profile-functions.php:163
+#: includes/profile-functions.php:176
 msgid "Uploaded Image Type is Not Allowed!"
 msgstr ""
 
-#: includes/profile-functions.php:168 includes/profile-functions.php:201
+#: includes/profile-functions.php:181 includes/profile-functions.php:218
 msgid "Error!"
 msgstr ""
 
-#: includes/profile-functions.php:194
+#: includes/profile-functions.php:212
 msgid "Profile Photo Removed!"
 msgstr ""
 
-#: includes/profile-functions.php:218
+#: includes/profile-functions.php:237
 msgid "Email verification code"
 msgstr ""
 
-#: includes/profile-functions.php:225
+#: includes/profile-functions.php:244
 msgid ""
 "verification code has been sent to your registered email id, Please check your "
 "inbox and provide verification code in input filed below"
 msgstr ""
 
-#: includes/profile-functions.php:228
+#: includes/profile-functions.php:247
 msgid "failed"
 msgstr ""
 
-#: includes/profile-functions.php:245
+#: includes/profile-functions.php:264
 msgid "email verified successfully"
 msgstr ""
 
-#: includes/profile-functions.php:249 includes/profile-functions.php:300
+#: includes/profile-functions.php:268 includes/profile-functions.php:319
 msgid "Please provide valid verification code"
 msgstr ""
 
-#: includes/profile-functions.php:271
+#: includes/profile-functions.php:290
 msgid ""
 "verification code has been sent to your registered Phone number, Please check "
 "your inbox and provide verification code in input filed below"
 msgstr ""
 
-#: includes/profile-functions.php:277
+#: includes/profile-functions.php:296
 msgid "Aww!, there was an error."
 msgstr ""
 
-#: includes/profile-functions.php:296
+#: includes/profile-functions.php:315
 msgid "Phone number verified successfully"
 msgstr ""
 
-#: includes/profile-functions.php:317 includes/profile-functions.php:321
-#: includes/profile-functions.php:367 includes/profile-functions.php:371
-#: includes/profile-functions.php:408 public/profile.php:37 public/profile.php:40
+#: includes/profile-functions.php:336 includes/profile-functions.php:340
+#: includes/profile-functions.php:386 includes/profile-functions.php:390
+#: includes/profile-functions.php:427 public/profile.php:37 public/profile.php:40
 msgid "Email Verification"
 msgstr ""
 
-#: includes/profile-functions.php:318 includes/profile-functions.php:329
-#: includes/profile-functions.php:368 includes/profile-functions.php:379
+#: includes/profile-functions.php:337 includes/profile-functions.php:348
+#: includes/profile-functions.php:387 includes/profile-functions.php:398
 msgid "verified"
 msgstr ""
 
-#: includes/profile-functions.php:322 includes/profile-functions.php:333
-#: includes/profile-functions.php:372 includes/profile-functions.php:383
+#: includes/profile-functions.php:341 includes/profile-functions.php:352
+#: includes/profile-functions.php:391 includes/profile-functions.php:402
 #: public/email_verification_required.php:4 public/profile.php:41
 #: public/profile.php:49
 msgid "verify"
 msgstr ""
 
-#: includes/profile-functions.php:328 includes/profile-functions.php:332
-#: includes/profile-functions.php:378 includes/profile-functions.php:382
-#: includes/profile-functions.php:435 public/profile.php:45 public/profile.php:48
+#: includes/profile-functions.php:347 includes/profile-functions.php:351
+#: includes/profile-functions.php:397 includes/profile-functions.php:401
+#: includes/profile-functions.php:454 public/profile.php:45 public/profile.php:48
 msgid "Phone Verification"
 msgstr ""
 
-#: includes/profile-functions.php:339
+#: includes/profile-functions.php:358
 msgid "User Verification"
 msgstr ""
 
-#: includes/profile-functions.php:413
+#: includes/profile-functions.php:432
 msgid ""
 "Click Get New link for verification code, Code will be sent to your registered "
 "email."
 msgstr ""
 
-#: includes/profile-functions.php:416 includes/profile-functions.php:443
+#: includes/profile-functions.php:435 includes/profile-functions.php:462
 msgid "Insert Verification Code"
 msgstr ""
 
-#: includes/profile-functions.php:418
+#: includes/profile-functions.php:437
 msgid "Verify E-mail"
 msgstr ""
 
-#: includes/profile-functions.php:419 includes/profile-functions.php:446
+#: includes/profile-functions.php:438 includes/profile-functions.php:465
 msgid "Get New"
 msgstr ""
 
-#: includes/profile-functions.php:440
+#: includes/profile-functions.php:459
 msgid ""
 "Click Get New link for verification code, Code will be sent to your registered "
 "Phone Number."
 msgstr ""
 
-#: includes/profile-functions.php:445
+#: includes/profile-functions.php:464
 msgid "Verify Phone"
 msgstr ""
 
-#: includes/profile-functions.php:481
+#: includes/profile-functions.php:503
 msgid "Account Deleted Permanently!"
 msgstr ""
 
-#: includes/profile-functions.php:486
+#: includes/profile-functions.php:508
 msgid "Something went wrong, please try again."
 msgstr ""
 
-#: includes/profile-functions.php:490
+#: includes/profile-functions.php:512
 msgid "You Can not delete Administrator Account Here."
 msgstr ""
 
-#: includes/profile-functions.php:494
+#: includes/profile-functions.php:516
 msgid "You are not allowed to perform this action."
 msgstr ""
 
-#: includes/profile-functions.php:513 public/profile.php:114
+#: includes/profile-functions.php:536 public/profile.php:114
 msgid "Close Your Account"
 msgstr ""
 
-#: includes/profile-functions.php:517
+#: includes/profile-functions.php:540
 msgid "Are you sure? Be aware this action can not undo."
 msgstr ""
 
-#: includes/profile-functions.php:522
+#: includes/profile-functions.php:545
 msgid "Delete Account"
 msgstr ""
 
-#: includes/profile-functions.php:523 public/claim_process.php:16
+#: includes/profile-functions.php:546 public/claim_process.php:16
 #: public/raise_up.php:13 public/renew.php:12 public/upgrade.php:22
 msgid "Cancel"
 msgstr ""

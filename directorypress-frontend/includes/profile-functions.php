@@ -10,65 +10,69 @@ if( !function_exists( 'dpfl_ProfileUpdate' ) ){
         if ($do_check == false) {
             $response['type'] = 'error';
             $response['message'] = esc_html__('No kiddies please!', 'directorypress-frontend');
-            wp_send_json($response);            
-        }
+                      
+        }else{
+			if(defined('DESIGNINVENTO_DEMO_SITE') && DESIGNINVENTO_DEMO_SITE){
+				$response['type'] = 'error';
+				$response['message'] = esc_html__('This Action is disabled on demo site.', 'directorypress-frontend');
+			}else{
+				$first_name = !empty( $_POST['first_name'] ) ? sanitize_text_field( $_POST['first_name'] ) : '';
+				$last_name  = !empty( $_POST['last_name'] ) ? sanitize_text_field( $_POST['last_name'] ) : '';
+				$nickname  = !empty( $_POST['nickname'] ) ? sanitize_text_field( $_POST['nickname'] ) : '';
+				$phone = !empty( $_POST['user_phone'] ) ? sanitize_text_field( $_POST['user_phone'] ) : '';
+				$whatsapp_number = !empty( $_POST['user_whatsapp_number'] ) ? sanitize_text_field( $_POST['user_whatsapp_number'] ) : '';
+				$description = !empty( $_POST['description'] ) ? sanitize_textarea_field( $_POST['description'] ) : '';
+				$user_address = !empty( $_POST['user_address'] ) ? sanitize_textarea_field( $_POST['user_address'] ) : '';
+				$gender		= !empty( $_POST['gender'] ) ? sanitize_text_field($_POST['gender']) : '';
+				$display_name = !empty( $_POST['display_name'] ) ? sanitize_text_field($_POST['display_name']) : '';
+				$user_email = !empty( $_POST['email'] ) ? sanitize_email($_POST['email']) : '';
+				$website = !empty( $_POST['user_url'] ) ? sanitize_url($_POST['user_url']) : '';
+				$author_fb    = !empty( $_POST['author_fb'] ) ? sanitize_url($_POST['author_fb']) : '';
+				$author_tw    = !empty( $_POST['author_tw'] ) ? sanitize_url($_POST['author_tw']) : '';
+				$author_linkedin    = !empty( $_POST['author_linkedin'] ) ? sanitize_url($_POST['author_linkedin']) : '';
+				$author_pinterest    = !empty( $_POST['author_pinterest'] ) ? sanitize_url($_POST['author_pinterest']) : '';
+				$author_flickr    = !empty( $_POST['author_flickr'] ) ? sanitize_url($_POST['author_flickr']) : '';
+				$author_behance    = !empty( $_POST['author_behance'] ) ? sanitize_url($_POST['author_behance']) : '';
+				$author_dribbble    = !empty( $_POST['author_dribbble'] ) ? sanitize_url($_POST['author_dribbble']) : '';
+				$author_ytube    = !empty( $_POST['author_ytube'] ) ? sanitize_url($_POST['author_ytube']) : '';
+				$author_vimeo    = !empty( $_POST['author_vimeo'] ) ? sanitize_url($_POST['author_vimeo']) : '';
+				$author_instagram    = !empty( $_POST['author_instagram'] ) ? sanitize_url($_POST['author_instagram']) : '';
+				$user_password    = !empty( $_POST['author_instagram'] ) ? sanitize_url($_POST['author_instagram']) : '';
+				//if($ALSP_ADIMN_SETTINGS['frontend_panel_social_links']){
+					update_user_meta($current_user->ID, 'author_fb', $author_fb);
+					update_user_meta($current_user->ID, 'author_tw', $author_tw);
+					update_user_meta($current_user->ID, 'author_linkedin', $author_linkedin);
+					update_user_meta($current_user->ID, 'author_pinterest', $author_pinterest);
+					update_user_meta($current_user->ID, 'author_flickr', $author_flickr);
+					update_user_meta($current_user->ID, 'author_behance', $author_behance);
+					update_user_meta($current_user->ID, 'author_dribbble', $author_dribbble);
+					update_user_meta($current_user->ID, 'author_ytube', $author_ytube);
+					update_user_meta($current_user->ID, 'author_vimeo', $author_vimeo);
+					update_user_meta($current_user->ID, 'author_instagram', $author_instagram);
+				//}
+				
+				
+				update_user_meta( $current_user->ID, 'gender', $gender );
+				update_user_meta( $current_user->ID, 'first_name', $first_name );
+				update_user_meta( $current_user->ID, 'last_name', $last_name );
+				update_user_meta( $current_user->ID, 'nickname', $nickname );
+				update_user_meta( $current_user->ID, 'description', $description );
+				update_user_meta( $current_user->ID, 'user_address', $user_address );
+				update_user_meta( $current_user->ID, 'user_phone', $phone );
+				update_user_meta( $current_user->ID, 'user_whatsapp_number', $whatsapp_number );
+				wp_update_user( array( 'ID' => $current_user->ID, 'display_name' => $display_name ));
+				wp_update_user( array( 'ID' => $current_user->ID, 'user_url' => $website ) );
+				
+				//reset email verification before update data
+				if($user_email != $current_user->data->user_email){
+					update_user_meta( $current_user->ID, 'email_verification_status', '');
+				}
+				wp_update_user( array( 'ID' => $current_user->ID, 'user_email' => $user_email ) );
 
-        $first_name = !empty( $_POST['first_name'] ) ? sanitize_text_field( $_POST['first_name'] ) : '';
-        $last_name  = !empty( $_POST['last_name'] ) ? sanitize_text_field( $_POST['last_name'] ) : '';
-		$nickname  = !empty( $_POST['nickname'] ) ? sanitize_text_field( $_POST['nickname'] ) : '';
-        $phone = !empty( $_POST['user_phone'] ) ? sanitize_text_field( $_POST['user_phone'] ) : '';
-		$whatsapp_number = !empty( $_POST['user_whatsapp_number'] ) ? sanitize_text_field( $_POST['user_whatsapp_number'] ) : '';
-		$description = !empty( $_POST['description'] ) ? sanitize_textarea_field( $_POST['description'] ) : '';
-		$user_address = !empty( $_POST['user_address'] ) ? sanitize_textarea_field( $_POST['user_address'] ) : '';
-		$gender		= !empty( $_POST['gender'] ) ? sanitize_text_field($_POST['gender']) : '';
-		$display_name = !empty( $_POST['display_name'] ) ? sanitize_text_field($_POST['display_name']) : '';
-		$user_email = !empty( $_POST['email'] ) ? sanitize_email($_POST['email']) : '';
-        $website = !empty( $_POST['user_url'] ) ? sanitize_url($_POST['user_url']) : '';
-        $author_fb    = !empty( $_POST['author_fb'] ) ? sanitize_url($_POST['author_fb']) : '';
-		$author_tw    = !empty( $_POST['author_tw'] ) ? sanitize_url($_POST['author_tw']) : '';
-		$author_linkedin    = !empty( $_POST['author_linkedin'] ) ? sanitize_url($_POST['author_linkedin']) : '';
-		$author_pinterest    = !empty( $_POST['author_pinterest'] ) ? sanitize_url($_POST['author_pinterest']) : '';
-		$author_flickr    = !empty( $_POST['author_flickr'] ) ? sanitize_url($_POST['author_flickr']) : '';
-		$author_behance    = !empty( $_POST['author_behance'] ) ? sanitize_url($_POST['author_behance']) : '';
-		$author_dribbble    = !empty( $_POST['author_dribbble'] ) ? sanitize_url($_POST['author_dribbble']) : '';
-		$author_ytube    = !empty( $_POST['author_ytube'] ) ? sanitize_url($_POST['author_ytube']) : '';
-		$author_vimeo    = !empty( $_POST['author_vimeo'] ) ? sanitize_url($_POST['author_vimeo']) : '';
-		$author_instagram    = !empty( $_POST['author_instagram'] ) ? sanitize_url($_POST['author_instagram']) : '';
-		$user_password    = !empty( $_POST['author_instagram'] ) ? sanitize_url($_POST['author_instagram']) : '';
-		//if($ALSP_ADIMN_SETTINGS['frontend_panel_social_links']){
-			update_user_meta($current_user->ID, 'author_fb', $author_fb);
-			update_user_meta($current_user->ID, 'author_tw', $author_tw);
-			update_user_meta($current_user->ID, 'author_linkedin', $author_linkedin);
-			update_user_meta($current_user->ID, 'author_pinterest', $author_pinterest);
-			update_user_meta($current_user->ID, 'author_flickr', $author_flickr);
-			update_user_meta($current_user->ID, 'author_behance', $author_behance);
-			update_user_meta($current_user->ID, 'author_dribbble', $author_dribbble);
-			update_user_meta($current_user->ID, 'author_ytube', $author_ytube);
-			update_user_meta($current_user->ID, 'author_vimeo', $author_vimeo);
-			update_user_meta($current_user->ID, 'author_instagram', $author_instagram);
-		//}
-		
-		
-		update_user_meta( $current_user->ID, 'gender', $gender );
-        update_user_meta( $current_user->ID, 'first_name', $first_name );
-        update_user_meta( $current_user->ID, 'last_name', $last_name );
-		update_user_meta( $current_user->ID, 'nickname', $nickname );
-        update_user_meta( $current_user->ID, 'description', $description );
-		update_user_meta( $current_user->ID, 'user_address', $user_address );
-		update_user_meta( $current_user->ID, 'user_phone', $phone );
-		update_user_meta( $current_user->ID, 'user_whatsapp_number', $whatsapp_number );
-		wp_update_user( array( 'ID' => $current_user->ID, 'display_name' => $display_name ));
-        wp_update_user( array( 'ID' => $current_user->ID, 'user_url' => $website ) );
-		
-		//reset email verification before update data
-		if($user_email != $current_user->data->user_email){
-			update_user_meta( $current_user->ID, 'email_verification_status', '');
+				$response['type'] = 'success';
+				$response['message'] = esc_html__('Profile Updated!', 'directorypress-frontend');
+			}
 		}
-		wp_update_user( array( 'ID' => $current_user->ID, 'user_email' => $user_email ) );
-		
-		//wp_update_user( array( 'ID' => $user->data->ID, 'user_pass' => esc_attr( $new_password ) ) );
-        $response['type'] = 'success';
-        $response['message'] = esc_html__('Profile Updated!', 'directorypress-frontend');
         wp_send_json($response); 
 	}
 	add_action('wp_ajax_dpfl_ProfileUpdate', 'dpfl_ProfileUpdate');
@@ -85,39 +89,44 @@ if (!function_exists('dpfl_PasswordUpdate')) {
         if ( $do_check == false ) {
             $response['type'] = 'error';
             $response['message'] = esc_html__('No kiddies please.', 'directorypress-frontend');
-            wp_send_json($response);            
-        }
-		
-        if( empty( $_POST['old-password'] ) || empty( $_POST['new-password'] ) || empty( $_POST['confirm-password'] ) ){
-        	$response['type'] = 'error';
-            $response['message'] = esc_html__('All the fields are required!', 'directorypress-frontend');
-            wp_send_json($response);  
-        }
+            //wp_send_json($response);            
+        }else{
+			if(defined('DESIGNINVENTO_DEMO_SITE') && DESIGNINVENTO_DEMO_SITE){
+				$response['type'] = 'error';
+				$response['message'] = esc_html__('This Action is disabled on demo site.', 'directorypress-frontend');
+			}else{
+				if( empty( $_POST['old-password'] ) || empty( $_POST['new-password'] ) || empty( $_POST['confirm-password'] ) ){
+					$response['type'] = 'error';
+					$response['message'] = esc_html__('All the fields are required!', 'directorypress-frontend');
+					wp_send_json($response);  
+				}
 
-        $old_password = sanitize_text_field( $_POST['old-password'] );  
-        $new_password = sanitize_text_field( $_POST['new-password'] );
-        $confirm_password = sanitize_text_field( $_POST['confirm-password'] );
-        $matched	= wp_check_password($old_password, $user->user_pass, $user->data->ID);
-        if ( $matched ){
-        	if( $new_password != $confirm_password ){
-        		$response['type'] = 'error';
-            	$response['message'] = esc_html__('New password did not match!', 'directorypress-frontend');
-            	wp_send_json($response); 
-        	}
-        	wp_update_user( array( 'ID' => $user->data->ID, 'user_pass' => esc_attr( $new_password ) ) );
-        	$response['type'] = 'success';
-            $response['message'] = esc_html__('Password Has Been Changed Successfully', 'directorypress-frontend');
-            wp_send_json($response); 
+				$old_password = sanitize_text_field( $_POST['old-password'] );  
+				$new_password = sanitize_text_field( $_POST['new-password'] );
+				$confirm_password = sanitize_text_field( $_POST['confirm-password'] );
+				$matched	= wp_check_password($old_password, $user->user_pass, $user->data->ID);
+				if ( $matched ){
+					if( $new_password != $confirm_password ){
+						$response['type'] = 'error';
+						$response['message'] = esc_html__('New password did not match!', 'directorypress-frontend');
+						wp_send_json($response); 
+					}
+					wp_update_user( array( 'ID' => $user->data->ID, 'user_pass' => esc_attr( $new_password ) ) );
+					$response['type'] = 'success';
+					$response['message'] = esc_html__('Password Has Been Changed Successfully', 'directorypress-frontend');
+					wp_send_json($response); 
 
-        } else {
-        	//Warning
-        	$response['type'] = 'error';
-            $response['message'] = esc_html__('Old password did not match', 'directorypress-frontend');
-            wp_send_json($response);  
-        }
-            
-        $response['type'] = 'error';
-        $response['message'] = esc_html__('Something went wrong, please try again', 'directorypress-frontend');
+				} else {
+					//Warning
+					$response['type'] = 'error';
+					$response['message'] = esc_html__('Old password did not match', 'directorypress-frontend');
+					wp_send_json($response);  
+				}
+					
+				$response['type'] = 'error';
+				$response['message'] = esc_html__('Something went wrong, please try again', 'directorypress-frontend');
+			}
+		}
         wp_send_json($response);   
         
     }
@@ -130,43 +139,48 @@ if (!function_exists('dpfl_PasswordUpdate')) {
 if( !function_exists('dpfl_profilePhoto') ){
 	function dpfl_profilePhoto(){
 		$user 		= wp_get_current_user();              	
-        $response 	= array(); 
-		$posted_data =  isset( $_POST ) ? $_POST : array();
-		$file_data = isset( $_FILES ) ? $_FILES : array();
-		$data = array_merge( $posted_data, $file_data );
-		$avatar_field = $data['avatar'];
-		if(!empty( $avatar_field )){
-			$avatar_id = dpfl_handle_image_upload( $avatar_field );
-			if($avatar_id){
-				update_user_meta( $user->ID, 'avatar_id', $avatar_id);
+        $response 	= array();
+		if(defined('DESIGNINVENTO_DEMO_SITE') && DESIGNINVENTO_DEMO_SITE){
+			$response['type'] = 'error';
+			$response['message'] = esc_html__('This Action is disabled on demo site.', 'directorypress-frontend');
+		}else{
+			$posted_data =  isset( $_POST ) ? $_POST : array();
+			$file_data = isset( $_FILES ) ? $_FILES : array();
+			$data = array_merge( $posted_data, $file_data );
+			$avatar_field = $data['avatar'];
+			if(!empty( $avatar_field )){
+				$avatar_id = dpfl_handle_image_upload( $avatar_field );
+				if($avatar_id){
+					update_user_meta( $user->ID, 'avatar_id', $avatar_id);
 
-				// New Image Src
-				$avatar_id = get_user_meta( $user->ID, 'avatar_id', true );
-				
-				if(!empty($avatar_id) && is_numeric($avatar_id)) {
-					$author_avatar_url = wp_get_attachment_image_src( $avatar_id, 'full' ); 
-					$src = $author_avatar_url[0];
-					$params = array( 'width' => 270, 'height' => 270, 'crop' => true );
-					$params_sidebar = array( 'width' => 60, 'height' => 60, 'crop' => true );
-					$src = bfi_thumb($src, $params );
-					$src_sidebar = bfi_thumb($src, $params_sidebar );
-				} else { 
-					$src = get_avatar_url($user_ID, ['size' => '270']);	
-					$src_sidebar = get_avatar_url($user_ID, ['size' => '60']);
+					// New Image Src
+					$avatar_id = get_user_meta( $user->ID, 'avatar_id', true );
+					
+					if(!empty($avatar_id) && is_numeric($avatar_id)) {
+						$author_avatar_url = wp_get_attachment_image_src( $avatar_id, 'full' ); 
+						$src = $author_avatar_url[0];
+						$params = array( 'width' => 270, 'height' => 270, 'crop' => true );
+						$params_sidebar = array( 'width' => 60, 'height' => 60, 'crop' => true );
+						$src = bfi_thumb($src, $params );
+						$src_sidebar = bfi_thumb($src, $params_sidebar );
+					} else { 
+						$src = get_avatar_url($user_ID, ['size' => '270']);	
+						$src_sidebar = get_avatar_url($user_ID, ['size' => '60']);
+					}
+					$response['type'] = 'success';
+					$response['message'] = esc_html__('Image Updated!', 'directorypress-frontend');
+					$response['src'] = $src;
+					$response['src_sidebar'] = $src_sidebar;
+				}else{
+					$response['type'] = 'error';
+					$response['message'] = esc_html__('Uploaded Image Type is Not Allowed!', 'directorypress-frontend');
 				}
-				$response['type'] = 'success';
-				$response['message'] = esc_html__('Image Updated!', 'directorypress-frontend');
-				$response['src'] = $src;
-				$response['src_sidebar'] = $src_sidebar;
+			
 			}else{
 				$response['type'] = 'error';
-				$response['message'] = esc_html__('Uploaded Image Type is Not Allowed!', 'directorypress-frontend');
+				$response['message'] = esc_html__('Error!', 'directorypress-frontend');
+				
 			}
-		
-		}else{
-			$response['type'] = 'error';
-			$response['message'] = esc_html__('Error!', 'directorypress-frontend');
-			
 		}
 		
 		wp_send_json($response); 
@@ -177,30 +191,35 @@ if( !function_exists('dpfl_profilePhoto') ){
 // Remove Profile Photo
 if( !function_exists('dpfl_removeProfilePhoto') ){
 	function dpfl_removeProfilePhoto(){
-		$user = wp_get_current_user();              	
+		            	
         $response 	= array(); 
-		
-		$remove_avatar = sanitize_text_field($_POST['remove_avatar']);
-		if($remove_avatar == 1){
-			
-			update_user_meta( $user->ID, 'avatar_id', '');
-
-			// New Image Src
-			
-			$src = get_avatar_url($user_ID, ['size' => '270']);	
-			$src_sidebar = get_avatar_url($user_ID, ['size' => '60']);
-			
-			$response['type'] = 'success';
-			$response['message'] = esc_html__('Profile Photo Removed!', 'directorypress-frontend');
-			$response['src'] = $src;
-			$response['src_sidebar'] = $src_sidebar;
-			wp_send_json($response); 
-		
-		}else{
+		if(defined('DESIGNINVENTO_DEMO_SITE') && DESIGNINVENTO_DEMO_SITE){
 			$response['type'] = 'error';
-			$response['message'] = esc_html__('Error!', 'directorypress-frontend');
-			wp_send_json($response); 
+			$response['message'] = esc_html__('This Action is disabled on demo site.', 'directorypress-frontend');
+		}else{
+			$user = wp_get_current_user();  
+			$remove_avatar = sanitize_text_field($_POST['remove_avatar']);
+			if($remove_avatar == 1){
+				
+				update_user_meta( $user->ID, 'avatar_id', '');
+
+				// New Image Src
+				
+				$src = get_avatar_url($user_ID, ['size' => '270']);	
+				$src_sidebar = get_avatar_url($user_ID, ['size' => '60']);
+				
+				$response['type'] = 'success';
+				$response['message'] = esc_html__('Profile Photo Removed!', 'directorypress-frontend');
+				$response['src'] = $src;
+				$response['src_sidebar'] = $src_sidebar;
+			
+			}else{
+				$response['type'] = 'error';
+				$response['message'] = esc_html__('Error!', 'directorypress-frontend');
+				
+			}
 		}
+		wp_send_json($response); 
 	}
 	add_action('wp_ajax_dpfl_removeProfilePhoto', 'dpfl_removeProfilePhoto');
 	add_action('wp_ajax_nopriv_dpfl_removeProfilePhoto', 'dpfl_removeProfilePhoto');
@@ -468,32 +487,36 @@ if (!function_exists('dpfl_closeUserAccount')) {
         if ( $do_check == false ) {
             $response['type'] = 'error';
             $response['message'] = esc_html__('No kiddies please.', 'directorypress-frontend');
-            wp_send_json($response);            
-        }
-		
-		
-        if(is_user_logged_in()) {
-			if(!current_user_can('administrator')){
-				if($current_user->ID) {
-					require_once( ABSPATH.'wp-admin/includes/user.php' );
-					wp_delete_user( $current_user->ID );
-					$response['type'] = 'success';
-					$response['message'] = esc_html__('Account Deleted Permanently!', 'directorypress-frontend');
-					$response['redirect_to'] = home_url('/');
-					//do_action('alsp_redirect_home_page');
-				}else{
-					$response['type'] = 'error';
-					$response['message'] = esc_html__('Something went wrong, please try again.', 'directorypress-frontend');
-				}
-			}else{    
+                     
+        }else{
+			if(defined('DESIGNINVENTO_DEMO_SITE') && DESIGNINVENTO_DEMO_SITE){
 				$response['type'] = 'error';
-				$response['message'] = esc_html__('You Can not delete Administrator Account Here.', 'directorypress-frontend');
-			}
-		}else{    
-			$response['type'] = 'error';
-			$response['message'] = esc_html__('You are not allowed to perform this action.', 'directorypress-frontend');
-        }
+				$response['message'] = esc_html__('This Action is disabled on demo site.', 'directorypress-frontend');
+			}else{
 		
+				if(is_user_logged_in()) {
+					if(!current_user_can('administrator')){
+						if($current_user->ID) {
+							require_once( ABSPATH.'wp-admin/includes/user.php' );
+							wp_delete_user( $current_user->ID );
+							$response['type'] = 'success';
+							$response['message'] = esc_html__('Account Deleted Permanently!', 'directorypress-frontend');
+							$response['redirect_to'] = home_url('/');
+							//do_action('alsp_redirect_home_page');
+						}else{
+							$response['type'] = 'error';
+							$response['message'] = esc_html__('Something went wrong, please try again.', 'directorypress-frontend');
+						}
+					}else{    
+						$response['type'] = 'error';
+						$response['message'] = esc_html__('You Can not delete Administrator Account Here.', 'directorypress-frontend');
+					}
+				}else{    
+					$response['type'] = 'error';
+					$response['message'] = esc_html__('You are not allowed to perform this action.', 'directorypress-frontend');
+				}
+			}
+		}
 		wp_send_json($response);   
         
     }
