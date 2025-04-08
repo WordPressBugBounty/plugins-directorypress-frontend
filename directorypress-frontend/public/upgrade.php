@@ -4,7 +4,7 @@
 
 <p><?php _e('The package of listing will be changed. You may upgrade or downgrade the package. If new package has an option of limited active period - expiration date of listing will be reassigned automatically.', 'directorypress-frontend'); ?></p>
 
-<form action="<?php echo esc_url(directorypress_dashboardUrl(array('directorypress_action' => 'upgrade_listing', 'listing_id' => $directorypress_object->current_listing->post->ID, 'upgrade_action' => 'upgrade', 'referer' => urlencode($public_handler->referer)))); ?>" method="POST">
+<form action="<?php echo esc_url(directorypress_dashboardUrl(array('directory_action' => 'upgrade_listing', 'listing_id' => $directorypress_object->current_listing->post->ID, 'upgrade_action' => 'upgrade', 'referer' => urlencode($public_handler->referer)))); ?>" method="POST">
 	<?php if ($public_handler->action == 'show'): ?>
 	<h3><?php _e('Choose new package', 'directorypress-frontend'); ?></h3>
 	<?php foreach ($directorypress_object->packages->packages_array AS $package): ?>

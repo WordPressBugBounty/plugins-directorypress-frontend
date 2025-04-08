@@ -6,7 +6,7 @@
 					echo '<p>'. esc_html__('Phone verification is required to submit new listing', 'directorypress-frontend').'</p>';
 					
 				echo '</div>';
-				echo '<a class="btn btn-primary" href="'. esc_url(directorypress_dashboardUrl(array('directorypress_action' => 'profile'))).'">'. esc_html__('Verify Now', 'directorypress-frontend').'</a>';
+				echo '<a class="btn btn-primary" href="'. esc_url(directorypress_dashboardUrl(array('directory_action' => 'profile'))).'">'. esc_html__('Verify Now', 'directorypress-frontend').'</a>';
 			?>
 		</div>
 	</div>

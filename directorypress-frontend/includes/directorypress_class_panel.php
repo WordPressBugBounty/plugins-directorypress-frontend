@@ -137,7 +137,7 @@ class directorypress_dashboard_handler extends directorypress_public {
 						$iclTranslationManagement->reset_duplicate_flag($new_listing_id);
 						directorypress_add_notification(esc_html__('Translation was successfully created!', 'directorypress-frontend'));
 						do_action('wpml_switch_language', esc_attr($lang_code));
-						wp_redirect(add_query_arg(array('directorypress_action' => 'edit_advert', 'listing_id' => $new_listing_id), get_permalink(apply_filters('wpml_object_id', $directorypress_object->dashboard_page_id, 'page', true, $lang_code))));
+						wp_redirect(add_query_arg(array('directory_action' => 'edit_advert', 'listing_id' => $new_listing_id), get_permalink(apply_filters('wpml_object_id', $directorypress_object->dashboard_page_id, 'page', true, $lang_code))));
 					} else {
 						directorypress_add_notification(esc_html__('Translation was not created!', 'directorypress-frontend'), 'error');
 						wp_redirect(directorypress_dashboardUrl());

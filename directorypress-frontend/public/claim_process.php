@@ -9,9 +9,9 @@
 <?php endif; ?>
 <p><?php _e('In case of approval new owner will receive email notification.', 'directorypress-frontend'); ?></p>
 
-<a href="<?php echo esc_url(directorypress_dashboardUrl(array('directorypress_action' => 'process_claim', 'listing_id' => $directorypress_object->current_listing->post->ID, 'claim_action' => 'approve', 'referer' => urlencode($public_handler->referer)))); ?>" class="btn btn-primary"><?php _e('Approve', 'directorypress-frontend'); ?></a>
+<a href="<?php echo esc_url(directorypress_dashboardUrl(array('directory_action' => 'process_claim', 'listing_id' => $directorypress_object->current_listing->post->ID, 'claim_action' => 'approve', 'referer' => urlencode($public_handler->referer)))); ?>" class="btn btn-primary"><?php _e('Approve', 'directorypress-frontend'); ?></a>
 &nbsp;&nbsp;&nbsp;
-<a href="<?php echo esc_url(directorypress_dashboardUrl(array('directorypress_action' => 'process_claim', 'listing_id' => $directorypress_object->current_listing->post->ID, 'claim_action' => 'decline', 'referer' => urlencode($public_handler->referer)))); ?>" class="btn btn-primary"><?php _e('Decline', 'directorypress-frontend'); ?></a>
+<a href="<?php echo esc_url(directorypress_dashboardUrl(array('directory_action' => 'process_claim', 'listing_id' => $directorypress_object->current_listing->post->ID, 'claim_action' => 'decline', 'referer' => urlencode($public_handler->referer)))); ?>" class="btn btn-primary"><?php _e('Decline', 'directorypress-frontend'); ?></a>
 &nbsp;&nbsp;&nbsp;
 <a href="<?php echo esc_url($public_handler->referer); ?>" class="btn btn-primary"><?php _e('Cancel', 'directorypress-frontend'); ?></a>
 <?php elseif ($public_handler->action == 'processed'): ?>

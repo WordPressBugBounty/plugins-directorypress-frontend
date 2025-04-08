@@ -365,7 +365,7 @@ class Directorypress_Frontend {
 		global $directorypress_object;
 
 		if (!is_admin() && $directorypress_object->dashboard_page_url && ($post = get_post($post_id)) && $post->post_type == DIRECTORYPRESS_POST_TYPE)
-			return directorypress_dashboardUrl(array('directorypress_action' => 'edit_advert', 'listing_id' => $post_id));
+			return directorypress_dashboardUrl(array('directory_action' => 'edit_advert', 'listing_id' => $post_id));
 	
 		return $url;
 	}

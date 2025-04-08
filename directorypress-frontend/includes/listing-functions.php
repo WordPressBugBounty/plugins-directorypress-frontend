@@ -482,7 +482,7 @@ if( !function_exists('dpfl_listingtrans_html') ){
 									echo '<span class="language-flag"><img src="'. esc_url($sitepress->get_flag_url( $lang_code )) .'" /></span>';
 									echo '<span class="language-label">'. esc_html($lang_details['display_name']).'</span>';
 									echo '<span class="language-action">';
-										echo '<a class="btn btn-primary" href="'. add_query_arg(array('directorypress_action' => 'edit_advert', 'listing_id' => apply_filters('wpml_object_id', $listing_id, DIRECTORYPRESS_POST_TYPE, true, $lang_code)), get_permalink(apply_filters('wpml_object_id', $directorypress_object->dashboard_page_id, 'page', true, $lang_code))).'">'. esc_html__('Edit', 'sitepress').'</a>';
+										echo '<a class="btn btn-primary" href="'. add_query_arg(array('directory_action' => 'edit_advert', 'listing_id' => apply_filters('wpml_object_id', $listing_id, DIRECTORYPRESS_POST_TYPE, true, $lang_code)), get_permalink(apply_filters('wpml_object_id', $directorypress_object->dashboard_page_id, 'page', true, $lang_code))).'">'. esc_html__('Edit', 'sitepress').'</a>';
 									echo '</span>';
 								echo '</div>';
 							}else{
@@ -490,7 +490,7 @@ if( !function_exists('dpfl_listingtrans_html') ){
 									echo '<span class="language-flag"><img src="'. esc_url($sitepress->get_flag_url( $lang_code )) .'" /></span>';
 									echo '<span class="language-label">'. esc_html($lang_details['display_name']) .'</span>';
 									echo '<span class="language-action">';
-										echo '<a class="btn btn-primary" href="'. directorypress_dashboardUrl(array('directorypress_action' => 'add_translation', 'listing_id' => $listing_id, 'to_lang' => $lang_code)).'">'. esc_html__('Add', 'sitepress').'</a>';
+										echo '<a class="btn btn-primary" href="'. directorypress_dashboardUrl(array('directory_action' => 'add_translation', 'listing_id' => $listing_id, 'to_lang' => $lang_code)).'">'. esc_html__('Add', 'sitepress').'</a>';
 									echo '</span>';
 								echo '</div>';
 							}

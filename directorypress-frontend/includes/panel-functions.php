@@ -86,7 +86,7 @@
 					<a class="parent-menu-link" href="#"><i class="dicode-material-icons dicode-material-icons-account-cog-outline"></i><span><?php _e('Accounts', 'directorypress-frontend'); ?></span></a>
 					<ul class="submenu">
 						<?php if ($DIRECTORYPRESS_ADIMN_SETTINGS['directorypress_allow_edit_profile']): ?>
-							<li class=""><a href="<?php echo directorypress_dashboardUrl(array('directorypress_action' => 'profile')); ?>"><span><?php _e('Edit Profile', 'directorypress-frontend'); ?></span></a></li>		
+							<li class=""><a href="<?php echo directorypress_dashboardUrl(array('directory_action' => 'profile')); ?>"><span><?php _e('Edit Profile', 'directorypress-frontend'); ?></span></a></li>		
 						<?php endif; ?>
 						<?php if(class_exists('WooCommerce') && (isset($DIRECTORYPRESS_ADIMN_SETTINGS['directorypress_woocommerce_frontend_links']) && $DIRECTORYPRESS_ADIMN_SETTINGS['directorypress_woocommerce_frontend_links'])): ?>
 							<?php foreach ( wc_get_account_menu_items() as $endpoint => $label ) : ?>
@@ -101,7 +101,7 @@
 					<li class="">
 						<a class="parent-menu-link" href="#"><i class="dicode-material-icons dicode-material-icons-message-text-outline"></i> <span><?php echo esc_html__('Messages', 'directorypress-frontend'); ?> <span class="badge bg-danger"><?php echo difp_get_user_message_count( 'unread' ); ?></span></span></a>
 						<ul class="submenu">
-							<li class=""><a href="<?php echo directorypress_dashboardUrl(array('directorypress_action' => 'messages')); ?>" data-bs-target="messages"><i class="fa fa-message"></i><?php echo esc_html__('Inbox', 'directorypress-frontend'); ?></a></li>
+							<li class=""><a href="<?php echo directorypress_dashboardUrl(array('directory_action' => 'messages')); ?>" data-bs-target="messages"><i class="fa fa-message"></i><?php echo esc_html__('Inbox', 'directorypress-frontend'); ?></a></li>
 						</ul> 
 					</li>
 				<?php endif; ?>
@@ -109,7 +109,7 @@
 					<?php echo do_action('directorypress_userpanel_listing_button'); ?>
 				<?php endif; ?>
 				<?php if ($DIRECTORYPRESS_ADIMN_SETTINGS['directorypress_favourites_list']): ?>
-					<li class=""><a class="parent-menu-link" href="<?php echo esc_url(directorypress_directorytype_url(array('directorypress_action' => 'myfavourites'))); ?>" target="_blank"> <i class="dicode-material-icons dicode-material-icons-heart-outline"></i>  <span><?php echo  esc_html__('Bookmarks', 'directorypress-frontend'); ?></span></a></li>
+					<li class=""><a class="parent-menu-link" href="<?php echo esc_url(directorypress_directorytype_url(array('directory_action' => 'myfavourites'))); ?>" target="_blank"> <i class="dicode-material-icons dicode-material-icons-heart-outline"></i>  <span><?php echo  esc_html__('Bookmarks', 'directorypress-frontend'); ?></span></a></li>
 				<?php endif; ?>
 				<?php do_action('directorypress_frontend_panel_menu'); ?>
 				<?php if(current_user_can('administrator')): ?>

@@ -7,7 +7,7 @@
 <?php do_action('directorypress_renew_html', $directorypress_object->current_listing); ?>
 
 <?php if ($public_handler->action == 'show'): ?>
-<a href="<?php echo esc_url(directorypress_dashboardUrl(array('directorypress_action' => 'renew_listing', 'listing_id' => $directorypress_object->current_listing->post->ID, 'renew_action' => 'renew', 'referer' => urlencode($public_handler->referer)))); ?>" class="btn btn-primary"><?php _e('Renew listing', 'directorypress-frontend'); ?></a>
+<a href="<?php echo esc_url(directorypress_dashboardUrl(array('directory_action' => 'renew_listing', 'listing_id' => $directorypress_object->current_listing->post->ID, 'renew_action' => 'renew', 'referer' => urlencode($public_handler->referer)))); ?>" class="btn btn-primary"><?php _e('Renew listing', 'directorypress-frontend'); ?></a>
 &nbsp;&nbsp;&nbsp;
 <a href="<?php echo esc_url($public_handler->referer); ?>" class="btn btn-primary"><?php _e('Cancel', 'directorypress-frontend'); ?></a>
 <?php elseif ($public_handler->action == 'renew'): ?>

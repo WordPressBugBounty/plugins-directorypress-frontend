@@ -8,7 +8,7 @@
 <?php do_action('directorypress_raise_up_html', $directorypress_object->current_listing); ?>
 
 <?php if ($public_handler->action == 'show'): ?>
-<a href="<?php echo esc_url(directorypress_dashboardUrl(array('directorypress_action' => 'raiseup_listing', 'listing_id' => $directorypress_object->current_listing->post->ID, 'raiseup_action' => 'raiseup', 'referer' => urlencode($public_handler->referer)))); ?>" class="btn btn-primary"><?php _e('Raise up', 'directorypress-frontend'); ?></a>
+<a href="<?php echo esc_url(directorypress_dashboardUrl(array('directory_action' => 'raiseup_listing', 'listing_id' => $directorypress_object->current_listing->post->ID, 'raiseup_action' => 'raiseup', 'referer' => urlencode($public_handler->referer)))); ?>" class="btn btn-primary"><?php _e('Raise up', 'directorypress-frontend'); ?></a>
 &nbsp;&nbsp;&nbsp;
 <a href="<?php echo esc_url($public_handler->referer); ?>" class="btn btn-primary"><?php _e('Cancel', 'directorypress-frontend'); ?></a>
 <?php elseif ($public_handler->action == 'raiseup'): ?>
