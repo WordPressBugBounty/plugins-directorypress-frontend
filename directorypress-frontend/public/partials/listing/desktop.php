@@ -1,5 +1,5 @@
 <?php global $DIRECTORYPRESS_ADIMN_SETTINGS, $directorypress_object, $wpdb, $table_prefix, $sitepress;
-echo '<div class="table-responsive clearfix">';
+echo '<div class="clearfix">';
 	echo '<table class="directorypress-dashbaord-listings table">';
 		echo '<thead>';
 			echo '<tr>';
